@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {% load static %}
+    <link rel="stylesheet" href=" {% static '/css/viewdonationrequest.css' %} ">
+</head>
+
+<body>
+    <div class="navigation">
+        <nav class="navbar">
+            <!-- LOGO -->
+            <div class="logo">FoodForAll</div>
+            <!-- NAVIGATION MENU -->
+            <ul class="nav-links">
+                <!-- USING CHECKBOX HACK -->
+                <input type="checkbox" id="checkbox_toggle" />
+                <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+                <!-- NAVIGATION MENUS -->
+                <div class="menu">
+                    {% if user.is_authenticated %}
+                    <li><a href="ngopage">Hi {{name}}</a></li>
+                    {% endif %}
+                    <li><a href="homengo">Home</a></li>
+                    </li>
+
+                </div>
+            </ul>
+        </nav>
+    </div>
+
+    {% block content %}
+    <div class="viewrequest">
+        <table class="tab">
+            <th>
+                <h3>Pending donation requests</h3>
+                <br>
+            </th>
+
+            {% for d in list %}
+            
+            <tr>
+                <td>Food For:</td>
+                <td>{{d.foodfor}}</td>
+            </tr>
+            <tr>
+                <td>Food Type:</td>
+                <td>{{d.foodtype}}</td>
+            </tr>
+            <tr>
+                <td>Quantity:</td>
+                <td>{{d.quantity}}</td>
+            </tr>
+            <tr>
+                <td>Date of Collaction:</td>
+                <td>{{d.dateofc}}</td>
+            </tr>
+            <tr>
+                <td>Time of Collaction:</td>
+                <td>{{d.timeofc}}</td>
+            </tr>
+            <tr>
+                <td>EXP Date:</td>
+                <td>{{d.expdate}}</td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td>{{d.address}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td> <input type="submit" value="Confirm" id="userdetail-form-submit">
+                    <input type="submit" value="Cancel" id="userdetail-form-submit"></td>
+            </tr>
+            <tr>
+                <td>----------------------------</td>
+                <td>-----------------------------</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endblock content %}
+    <script src="/static/javascript/userBase.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+{% extends 'ngoBase.html' %} {% block title %}Availabe Food{% endblock title %} {% block cssfile %}
+<link rel="stylesheet" href="/static/css/afood.css">
+<style>
+
+</style>
+{% endblock cssfile %} {% block contant %}
+<div class="hd">
+    <h2>Available Food</h2>
+</div>
+<div class="food-container">
+    {% for d in list %}
+    <div class="food-card">
+        <div class="food-image">
+
+            <img src="/media/images/{{d.foodtype}}.jpg" class="food-thumb" alt=""><br>
+
+        </div>
+        <div class="food-info">
+            <h2 class="food-brand">{{d.foodtype}}</h2>
+            <!-- <p class="food-short-des"></p> -->
+            <span class="quantity">{{d.quantity}} KG</span>
+        </div>
+    </div>
+    {% endfor %} {% endblock contant %}

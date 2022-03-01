@@ -96,44 +96,39 @@
         <form id="donatefood-form" action="donatefood" method="post">
             {% csrf_token %}
             <table>
-                <tr>
-                    <td>Food For:</td>
-                    <td><input type="radio" name="foodfor" value="human" class="donatefood-form-field" required> HUMAN
-                        <input type="radio" name="foodfor" value="animal" class="donatefood-form-field" required> ANIMAL
-                    </td>
+
                 </tr>
                 <tr>
                     <td>Type of Food:</td>
-                    <td><input type="text" name="foodtype" id="foodtype-field" class="donatefood-form-field" placeholder="Enter food type" required></td>
+                    <td><select name="foodtype" id="foodtype-field" class="donatefood-form-field" placeholder="Enter food type">
+                        <option value="rice">Rice</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="corn">Corn</option>
+                        {% comment %} <option value="">Audi</option> {% endcomment %}
+                      </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>Quantity of Food:</td>
-                    <td><input type="text" name="quantity" id="quantity-field" class="donatefood-form-field" placeholder="Enter food quantity" required></td>
+                    <td><input type="number" name="quantity" id="quantity-field" class="donatefood-form-field" placeholder="Enter food quantity"></td>
+                    <td>Kg</td>
                 </tr>
                 <tr>
                     <td>Date of Collection:</td>
-                    <td><input type="date" name="dateofc" id="date-field" class="donation-form-field" placeholder="dd-mm-yyyy" required></td>
+                    <td><input type="date" name="dateofc" id="date-field" class="donation-form-field" placeholder="dd-mm-yyyy"></td>
                 </tr>
                 <tr>
                     <td>Time of Collection:</td>
-                    <td><input type="time" name="timeofc" id="ctime-field" class="donatefood-form-field" placeholder="Enter time for food collection" required></td>
+                    <td><input type="time" name="timeofc" id="ctime-field" class="donatefood-form-field" placeholder="Enter time for food collection"></td>
                 </tr>
-                <tr>
-                    <td>EXP Date:</td>
-                    <td><input type="date" name="expdate" id="date-field" class="donation-form-field" placeholder="dd-m-yyyyy" required></td>
-                </tr>
+
                 <tr>
                     <td>Address:</td>
-                    <td><textarea type="textarea" name="address" id="address-field" class="donatefood-form-field" placeholder="Enter your address" required></textarea>
+                    <td><textarea type="textarea" name="address" id="address-field" class="donatefood-form-field" placeholder="Enter your address"></textarea>
 
                     </td>
                 </tr>
-                <tr>
-                    <td>Image:</td>
-                    <td><input type="file" name="Image" id="Image-field" class="donatefood-form-field" placeholder="choose pic"></textarea>
 
-                    </td>
-                </tr>
             </table>
 
             <br>

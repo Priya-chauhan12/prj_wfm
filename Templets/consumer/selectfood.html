@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Food</title>
+    <link rel="stylesheet" href="/static/css/selectfood.css">
+    <link rel="stylesheet" href="/static/css/viewdonationrequest.css">
+
+
+</head>
+
+<body>
+    <div class="navigation">
+        <nav class="navbar">
+            <!-- LOGO -->
+            <div class="logo">FoodForAll</div>
+            <!-- NAVIGATION MENU -->
+            <ul class="nav-links">
+                <!-- USING CHECKBOX HACK -->
+                <input type="checkbox" id="checkbox_toggle" />
+                <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+                <!-- NAVIGATION MENUS -->
+                <div class="menu">
+                    {% if user.is_authenticated %}
+                    <li><a href="consumer">Hi {{name}}</a></li>
+                    {% endif %}
+                    <li><a href="chome">Home</a></li>
+                    </li>
+
+                </div>
+            </ul>
+        </nav>
+    </div>
+    <div class="hadder">
+        <h1>Select food from here</h1>
+    </div>
+    <div class="food">
+        <br>
+        <br>
+        <p class="pera">Food quantity is based on number of person.Please enter number of person in given input field and click on select button.</p>
+    </div>
+    <br>
+    <br>
+
+
+
+    <div class="food-container">
+        {% for d in list %}
+        <form action="select" method="post">
+            {% csrf_token %}
+            <div class="food-card">
+                <div class="food-image">
+                    <img src="/static/Image/{{d.foodtype}}.jpg" class="food-thumb" alt=""><br>
+
+                </div>
+                <div class="food-info">
+                    <h2 class="food-brand">{{d.foodtype}}</h2>
+                    {% if not d.available  %}<p class="food-availble">Not available</p>
+                    {% else %}
+                    <p><br></p>
+                    {% endif %}
+                    {% if messages %} 
+                    {% for message in messages %}
+                    {% if d.message %}{{message}}{{d.quantity}}<br>{% endif %}
+                    {% endfor %} {% endif %}
+
+                    <span class="quantity"><input type="text"name="qu" maxlength="4" size="4">
+                        &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+                    <input type="hidden" name="foodtype" value="{{d.foodtype}}">
+
+                    <input type="submit" value="Select" class="card-btn">
+                    <a href="confirm"></a> &nbsp;&nbsp;
+                </div>
+            </div>
+        </form>
+        {% endfor %}
+
+
+    </div>
+</body>
+
+</html>

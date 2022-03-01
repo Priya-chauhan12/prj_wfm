@@ -6,19 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> FoodForAll</title>
-    {% comment %} <link rel="stylesheet" href="/static/css/home.css"> {% endcomment %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static "/css/home.css" %}">
+    {% comment %}
+    <link rel="stylesheet" href="/static/css/home.css"> {% endcomment %} {% load static %}
+    <link rel="stylesheet" href="{% static '/css/home.css' %}">
     <style>
         .bodyText {
             margin: 30px;
         }
+        
         .menu li {
-            font-size:20px;
+            font-size: 20px;
         }
+        
         .menu li:hover {
             background-color: #2980B9;
         }
+        
         .titlefont {
             font-size: xx-large;
         }
@@ -102,7 +105,7 @@
             If you expect that food waste may occur, do not hesitate to get in touch in advance with the NGO organizations or institutions listed in 'Whom Can You Contact?' section below.
         </p>
         <br>
-       
+
     </div>
 
     <script src="/static/javascript/home.js"></script>

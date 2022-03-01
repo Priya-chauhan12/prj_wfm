@@ -1,40 +1,78 @@
 	
+from datetime import datetime
+from email.mime import message
 from email.policy import default
+from operator import mod
+from time import time
 from django.db import models
 
 # Create your models here.
 # model for all users 
 class   myUser(models.Model):
     usert=(
-        ("ngo","NGO"),("doner","Doner")
+        ("ngo","NGO"),("doner","Doner"),("consumer","consumer")
     )
-    usertype=models.CharField(max_length=5,default='',choices=usert)
+    usertype=models.CharField(max_length=10,default='',choices=usert)
     username=models.CharField(max_length=50)
     email=models.CharField(max_length=50,default='')
-    phoneno=models.CharField(max_length=50,default = '')
     password=models.CharField(max_length=50)
-   
+    
     def __str__(Self):
         return Self.username
 
 
-class donatefoods(models.Model):
-    foodforr=(
-        ("animal","ANIMAL"),("human","HUMAN")
+class donation(models.Model):
+    foodt=(
+        ("rice","rice"),("wheat","wheat"),("corn","corn")
     )
-    foodfor=models.CharField(max_length=7,default='',choices=foodforr)
-    foodtype=models.CharField(max_length=50,default='')
-    quantity=models.CharField(max_length=50,default='')
+    foodtype=models.CharField(max_length=50,default='',choices=foodt)
+    quantity=models.IntegerField(default=0)
     dateofc=models.DateField(default='')
-    expdate=models.DateField(default='')
     timeofc=models.TimeField(default='')
+    # image = models.ImageField(upload_to='images',default='')
     address=models.CharField(max_length=500,default='')
-    Image=models.ImageField(upload_to="media",default='')
+    status=models.CharField(max_length=10,default='Pending')  
+    user=models.ForeignKey(myUser,on_delete=models.CASCADE)
     def __str__(Self):
         return Self.foodtype
-# class Images(model.models):
-#     name= models.CharField(max_length=500)
-#     videofile= models.FileField(upload_to='/static/Image', null=True, verbose_name="")
 
-    # def __str__(self):
-    #     return self.name + ": " + str(self.imagefile)
+
+class userdetail(models.Model):
+    g=(
+        ("male","MALE"),("female","FEMALE")
+    )
+    gender=models.CharField(max_length=7,default='',choices=g)
+    firstname=models.CharField(max_length=50,default='')
+    lastname=models.CharField(max_length=50,default='')
+    bdate=models.DateField(default='')
+    phoneno=models.CharField(max_length=50,default = '')
+    aadhar=models.CharField(max_length=50,default = '')
+    address=models.CharField(max_length=500,default='')
+    user=models.ForeignKey(myUser,on_delete=models.CASCADE)
+    def __str__(Self):
+        return Self.firstname
+
+class fooddata(models.Model):
+    foodtype=models.CharField(max_length=50,default='')
+    quantity=models.IntegerField(default=0)
+    available=models.BooleanField(default=False)
+    message=models.BooleanField(default=False)
+    # image = models.ImageField(upload_to='images',default='')
+    def __str__(Self):
+        return Self.foodtype
+# cart model
+
+class cart(models.Model):
+    user=models.ForeignKey(myUser,on_delete=models.CASCADE)
+    created_date=models.DateTimeField(default=datetime.now)
+    def __str__(Self):
+        return Self.user.username
+
+class cartItem(models.Model):
+    foodtype=models.ForeignKey(fooddata,on_delete=models.CASCADE)
+    quantity=models.CharField(max_length=10,default=0)
+    cart=models.ForeignKey(cart,on_delete=models.CASCADE)
+    def __str__(Self):
+        return Self.foodtype.foodtype
+
+

@@ -1,5 +1,5 @@
 * {
-    font-family: cursive;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 
@@ -15,7 +15,7 @@
 }
 
 body {
-    font-family: cursive;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 a {
@@ -29,11 +29,12 @@ li {
 
 /* NAVBAR STYLING STARTS */
 
-.navigation {
+
+/* .navigation {
     position: sticky;
     top: 0;
     z-index: 100;
-}
+} */
 
 .navbar {
     display: flex;
@@ -42,6 +43,7 @@ li {
     padding: 20px;
     background-color: #4c9e9e;
     color: #fff;
+    height: 100px;
 }
 
 .nav-links a {
@@ -145,3 +147,6 @@ input[type=checkbox] {
     margin-left: auto;
     margin-right: auto;
 }
+
+
+/* about food afood file */

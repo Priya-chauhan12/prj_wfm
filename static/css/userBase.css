@@ -1,5 +1,5 @@
 * {
-    font-family: cursive;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .dropbtn {
@@ -67,7 +67,8 @@
 }
 
 body {
-    font-family: cursive;
+    overflow: auto;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 a {
@@ -81,11 +82,12 @@ li {
 
 /* NAVBAR STYLING STARTS */
 
-.navigation {
+
+/* .navigation {
     position: sticky;
     top: 0;
     z-index: 100;
-}
+} */
 
 .navbar {
     display: flex;

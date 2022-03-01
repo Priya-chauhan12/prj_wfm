@@ -5,11 +5,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {% load static %} {% block cssfile %} {% endblock cssfile %}
+    <style>
+        * {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
 </head>
 
 <body>
-    this is ngo base file
+    <div class="navigation">
+        <nav class="navbar">
+            <!-- LOGO -->
+            <div class="logo">FoodForAll</div>
+            <!-- NAVIGATION MENU -->
+            <ul class="nav-links">
+                <!-- USING CHECKBOX HACK -->
+                <input type="checkbox" id="checkbox_toggle" />
+                <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+                <!-- NAVIGATION MENUS -->
+                <div class="menu">
+                    {% if user.is_authenticated %}
+                    <li><a href="ngopage">Hi {{name}}</a></li>
+                    {% endif %}
+                    <li><a href="homengo">Home</a></li>
+                    </li>
+
+                </div>
+            </ul>
+        </nav>
+    </div>
+    {% block contant %}{% endblock contant %}
 </body>
 
 </html>

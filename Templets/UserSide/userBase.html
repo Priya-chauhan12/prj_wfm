@@ -6,63 +6,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock title %}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {% load static %}
-    <link rel="stylesheet" href=" {% static '/css/userBase.css' %} ">
-    <style>
-        .mainpart {
-            position: relative;
-            text-align: center;
-        }
-        
-        .df {
-            position: absolute;
-            font-size: 30px;
-            top: 50%;
-            left: 50%;
-            background-color: teal;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/userBase.css">
+
+
 </head>
 
 <body>
-    <div class="navigation">
-        <nav class="navbar">
-            <!-- LOGO -->
-            <div class="logo">FoodForAll</div>
-            <!-- NAVIGATION MENU -->
-            <ul class="nav-links">
-                <!-- USING CHECKBOX HACK -->
-                <input type="checkbox" id="checkbox_toggle" />
-                <label for="checkbox_toggle" class="hamburger">&#9776;</label>
-                <!-- NAVIGATION MENUS -->
-                <div class="menu">
-                    {% if user.is_authenticated %}
-                    <li><a href="users">Hi {{name}}</a></li>
-                    {% endif %}
-                    <li><a href="homeuser">Home</a></li>
-                    {% comment %}
-                    <li><a href="donatefood"> Donate Food</a></li>{% endcomment %}
-                    <li><button onclick="myFunction()" class="dropbtn"><i class="fa fa-fw fa-user"></i>My Account</button>
-                        <div id="myDropdown" class="dropdown-content">
-                            <a href="#home">View Previous Donations</a>
-                            <a href="#about">Update Peofile</a>
-                            <a href="changepassword">Change Password</a>
+    <div class="main">
+        <div class="navigation">
+            <nav class="navbar">
+                <!-- LOGO -->
+                <div class="logo">FoodForAll</div>
+                <!-- NAVIGATION MENU -->
+                <ul class="nav-links">
+                    <!-- USING CHECKBOX HACK -->
+                    <input type="checkbox" id="checkbox_toggle" />
+                    <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+                    <!-- NAVIGATION MENUS -->
+                    <div class="menu">
+                        {% if user.is_authenticated %}
+                        <li><a href="users">Hi {{name}}</a></li>
+                        {% endif %}
+                        <li><a href="homeuser">Home</a></li>
+                        <!-- <li><a href="donate"> Donate Food</a></li> -->
+                        <li><button onclick="myFunction()" class="dropbtn"><i class="fa fa-fw fa-user"></i>My Account</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <a href="requeststatus">Request Status</a>
+                                <a href="#home">View Previous Donations</a>
+                                <a href="#about">Update Peofile</a>
+                                <a href="changepassword">Change Password</a>
 
-                        </div>
-                    </li>
+                            </div>
+                        </li>
 
-                </div>
-            </ul>
-        </nav>
-    </div>
-    <div class="mainpart">
-        <img src="/static/Image/pic.jpg" alt="as" style="width:100%;">
-        <div class="df"><a href="donatefood"> Donate Food</a>
+                    </div>
+                </ul>
+            </nav>
         </div>
-    </div>
 
-    {% block content %}{% endblock content %}
+
+        {% block content %}{% endblock content %} </div>
     <script src="/static/javascript/userBase.js"></script>
 
 </body>

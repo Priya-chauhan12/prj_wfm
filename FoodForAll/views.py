@@ -9,10 +9,9 @@ from django.contrib.auth.models import User, auth
 from django.template import context
 from django.db.models import Sum
 from pkg_resources import AvailableDistributions
-from FoodForAll.models import cartItem, fooddata, myUser,cart
+from FoodForAll.models import cartItem, fooddata, myUser,cart,feedback
 from FoodForAll.models import donation,userdetail
-
-
+from FoodForAll.forms import uploadinfo
 
 # ------------------------------------------------------------------------------
 # for login
@@ -134,7 +133,16 @@ def consumer(request):
     name = request.session.get('name', default='Guest')
     return render(request, 'consumer.html',{'name':name})
 # for logout
-
+def feedbackinfo(request):
+    if request.method == "POST":
+        form = uploadinfo(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            img_obj=form.instance
+            return render(request, 'feedbackinfo.html',{'form':form,'img_obj':img_obj})    
+    else:
+            form = uploadinfo()
+    return render(request, 'feedbackinfo.html',{'form':form})
 def listdoner(request):
     name = request.session.get('name', default='Guest')
     d=list(donation.objects.filter(status='confirm')) 
@@ -159,10 +167,11 @@ def donatefood(request):
         dateofc = request.POST.get('dateofc', '')
         timeofc = request.POST.get('timeofc', '')
         address = request.POST.get('address', '')
+        image=request.POST.get('image','')
         status='panding'
         user=user
         d = donation(user=user, foodtype=foodtype, quantity=quantity,
-                        status=status,dateofc=dateofc, timeofc=timeofc, address=address,)
+                        status=status,dateofc=dateofc, timeofc=timeofc, address=address,image=image)
         d.save()
         return redirect('users')
     else:

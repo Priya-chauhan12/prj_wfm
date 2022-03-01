@@ -58,4 +58,5 @@ urlpatterns = [
     path('remove',views.remove,name='remove'),
     path('removeall',views.removeall,name='removeall'),
     path('confirmOrder',views.confirmOrder,name='confirmOrder'),
+    path('feedbackinfo',views.feedbackinfo,name='feedbackinfo'),
 ]

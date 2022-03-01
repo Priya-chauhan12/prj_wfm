@@ -3,6 +3,7 @@ from datetime import datetime
 from email.mime import message
 from email.policy import default
 from operator import mod
+from pyexpat import model
 from time import time
 from django.db import models
 
@@ -29,7 +30,7 @@ class donation(models.Model):
     quantity=models.IntegerField(default=0)
     dateofc=models.DateField(default='')
     timeofc=models.TimeField(default='')
-    # image = models.ImageField(upload_to='images',default='')
+    image = models.ImageField(upload_to="myimage",default='')
     address=models.CharField(max_length=500,default='')
     status=models.CharField(max_length=10,default='Pending')  
     user=models.ForeignKey(myUser,on_delete=models.CASCADE)
@@ -75,4 +76,9 @@ class cartItem(models.Model):
     def __str__(Self):
         return Self.foodtype.foodtype
 
+class feedback(models.Model):
+    desc=models.CharField(max_length=500)
+    pic=models.ImageField(upload_to="con_pic",null=True)
+    def __str__(self):
+        return self.desc
 

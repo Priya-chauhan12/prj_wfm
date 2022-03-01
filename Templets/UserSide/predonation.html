@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Request Status{% endblock title %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {% load static %}
+
+    <link rel="stylesheet" href=" {% static '/css/requeststatus.css' %} ">
+</head>
+
+<body>
+    <div class="navigation">
+        <nav class="navbar">
+            <!-- LOGO -->
+            <div class="logo">FoodForAll</div>
+            <!-- NAVIGATION MENU -->
+            <ul class="nav-links">
+                <!-- USING CHECKBOX HACK -->
+                <input type="checkbox" id="checkbox_toggle" />
+                <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+                <!-- NAVIGATION MENUS -->
+                <div class="menu">
+                    {% if user.is_authenticated %}
+                    <li><a href="users">Hi {{name}}</a></li>
+                    {% endif %}
+                    <li><a href="homeuser">Home</a></li>
+
+
+
+                </div>
+            </ul>
+        </nav>
+    </div>
+
+    {% block content %}
+
+    <div class="requeststatus">
+        <table class="tab">
+            <th>
+                <h3 class="text-center">your previous donation</h3>
+                <br>
+            </th>
+
+            {% for d in list %}
+
+
+            <tr>
+                <td>Food Type:</td>
+                <td>{{d.foodtype}}</td>
+            </tr>
+            <tr>
+                <td>Quantity:</td>
+                <td>{{d.quantity}}&nbsp;Kg</td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td>{{d.address}}</td>
+            </tr>
+            <tr>
+                <td>date of collection:</td>
+                <td>{{d.dateofc}}</td>
+            </tr>
+            <tr>
+                <td>Time Of Collection:</td>
+                <td>{{d.timeofc}}</td>
+            </tr>
+            <tr>
+                <td>----------------------------</td>
+                <td>-----------------------------</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% endblock content %}
+    <script src="/static/javascript/userBase.js"></script>
+
+</body>
+
+</html>

@@ -148,5 +148,10 @@ input[type=checkbox] {
     margin-right: auto;
 }
 
+.dlist {
+    background-position: center;
+    background-color: thistle;
+}
+
 
 /* about food afood file */

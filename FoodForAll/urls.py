@@ -20,8 +20,9 @@ urlpatterns = [
     path('users',views.users,name='users'),
     path('userdetail',views.userdetails,name='userdetail'),
     path('donatefood',views.donatefood,name='donatefood'),
-     path('donate',views.donate,name='donate'),
+    path('donate',views.donate,name='donate'),
     path('requeststatus',views.requeststatus,name='requeststatus'),
+    path('predonation',views.predonation,name='predonation'),
     
     path('ngo',views.ngoBase,name='ngo'),
     path('ngodetail',views.ngodetail,name='ngodetail'),
@@ -30,6 +31,7 @@ urlpatterns = [
     path('afood',views.afood,name='afood'),
     path('confirm',views.confirm,name='confirm'),
     path('cancel',views.cancel,name='cancel'),
+    path('listdoner',views.listdoner,name='listdoner'),
 
     path('about',views.about,name='about'),
     path('contact',views.contact,name='contact'),

@@ -135,7 +135,10 @@ def consumer(request):
     return render(request, 'consumer.html',{'name':name})
 # for logout
 
-
+def listdoner(request):
+    name = request.session.get('name', default='Guest')
+    d=list(donation.objects.filter(status='confirm')) 
+    return render(request,'listdoner.html',{'name': name,'list':d})
 def logout(request):
     if 'name' in request.session['name']:
         print('name')
@@ -159,7 +162,7 @@ def donatefood(request):
         status='panding'
         user=user
         d = donation(user=user, foodtype=foodtype, quantity=quantity,
-                        status=status,dateofc=dateofc, timeofc=timeofc, address=address)
+                        status=status,dateofc=dateofc, timeofc=timeofc, address=address,)
         d.save()
         return redirect('users')
     else:
@@ -179,7 +182,11 @@ def requeststatus(request):
     df=list(donation.objects.filter(user=id))
     return render(request, 'requeststatus.html', {'name': name,'list':df})
 #----------------------------------------------------------------------------------
-
+def predonation(request):
+    name = request.session.get('name', default='Guest')
+    id = request.session.get('id')
+    df=list(donation.objects.filter(user=id,status='confirm'))
+    return render(request,'predonation.html',{'name': name,'list':df})
 def confirm(request):
     name = request.session.get('name', default='Guest')
     if request.method == "POST":

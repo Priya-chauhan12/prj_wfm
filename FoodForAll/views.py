@@ -212,6 +212,11 @@ def confirm(request):
         return redirect('viewdonationrequest')
     return render(request, 'confirm.html', {'name': name})
 
+def viewfeedback(request):
+    name = request.session.get('name', default='Guest')
+    f=list(feedback.objects.all())
+    return render(request, 'viewfeedback.html', {'name': name,'list':f})
+
 def cancel(request):
     name = request.session.get('name', default='Guest')
     if request.method == "POST":

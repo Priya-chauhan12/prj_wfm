@@ -32,7 +32,7 @@ urlpatterns = [
     path('confirm',views.confirm,name='confirm'),
     path('cancel',views.cancel,name='cancel'),
     path('listdoner',views.listdoner,name='listdoner'),
-
+    path('viewfeedback',views.viewfeedback,name='viewfeedback'),
     path('about',views.about,name='about'),
     path('contact',views.contact,name='contact'),
     path('aboutuser',views.aboutuser,name='aboutuser'),

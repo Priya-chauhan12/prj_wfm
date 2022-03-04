@@ -9,9 +9,9 @@ from django.contrib.auth.models import User, auth
 from django.template import context
 from django.db.models import Sum
 from pkg_resources import AvailableDistributions
-from FoodForAll.models import cartItem, fooddata, myUser,cart,feedback
+from FoodForAll.models import cartItem, fooddata, myUser,cart,feedback,foodpack,packCart
 from FoodForAll.models import donation,userdetail
-from FoodForAll.forms import uploadinfo
+
 
 # ------------------------------------------------------------------------------
 # for login
@@ -133,16 +133,7 @@ def consumer(request):
     name = request.session.get('name', default='Guest')
     return render(request, 'consumer.html',{'name':name})
 # for logout
-def feedbackinfo(request):
-    if request.method == "POST":
-        form = uploadinfo(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            img_obj=form.instance
-            return render(request, 'feedbackinfo.html',{'form':form,'img_obj':img_obj})    
-    else:
-            form = uploadinfo()
-    return render(request, 'feedbackinfo.html',{'form':form})
+
 def listdoner(request):
     name = request.session.get('name', default='Guest')
     d=list(donation.objects.filter(status='confirm')) 
@@ -158,6 +149,19 @@ def donate(request):
     name = request.session.get('name', default='Guest')
     return render(request, 'donate.html', {'name': name})
 
+
+def feedbackinfo(request):
+    name=request.session.get('name',default='Guest')
+    user=myUser.objects.get(username=name)
+    if request.method == "POST":
+       desc=request.POST.get('desc','')
+       pic = request.FILES.get('pic','')
+       user=user
+       f = feedback(desc=desc, pic=pic, user=user)
+       f.save()
+       return redirect('consumer')
+    else:
+        return render(request, 'feedbackinfo.html',{'name':name})
 def donatefood(request):
     name=request.session.get('name',default='Guest')
     user=myUser.objects.get(username=name)
@@ -167,7 +171,7 @@ def donatefood(request):
         dateofc = request.POST.get('dateofc', '')
         timeofc = request.POST.get('timeofc', '')
         address = request.POST.get('address', '')
-        image=request.POST.get('image','')
+        image=request.FILES.get('imgfile','')
         status='panding'
         user=user
         d = donation(user=user, foodtype=foodtype, quantity=quantity,
@@ -237,19 +241,28 @@ def select(request):
         AvailableFood=fooddata.objects.get(foodtype=foodtype)
         foodtype=AvailableFood
         AvailableFoodQuantity=AvailableFood.quantity
-        if AvailableFoodQuantity>=int(quan):
-            AvailableFood.message=False
-            AvailableFood.save()
+        if AvailableFoodQuantity !=0:
+            # AvailableFood.message=False
+            # AvailableFood.save()
             c=cart.objects.get(user=id)
-            ci=cartItem(foodtype=foodtype,quantity=quan,cart=c)
+            ci=cartItem(foodtype=foodtype,quantity=0,cart=c)
             ci.save()
-        else:
-            AvailableFood.message=True
-            AvailableFood.save()
-            messages.error(request, 'Not available this much of quantity please select other.Available quantity:')
-        return redirect('selectfood')
+            return redirect('selectfood')
     return render(request, 'select.html', {'name': name,'food':AvailableFood})
 
+
+def selectpack(request):
+    name = request.session.get('name', default='Guest')
+    if request.method == "POST":
+        id=request.session['id']
+        pack=request.POST.get('foodpack', '')
+        AvailableFoodPack=(foodpack.objects.get(packName=pack))
+        FoodPack=AvailableFoodPack
+        c=cart.objects.get(user=id)
+        ci=packCart(foodpack=FoodPack ,quantity=0,cart=c)
+        ci.save()
+        return redirect('selectfood')
+    return render(request, 'select.html', {'name': name})
 #--------------------------------------------------------------------------------------
 def afood(request):
     name = request.session.get('name', default='Guest')
@@ -264,8 +277,9 @@ def afood(request):
 #--------------------------------------------------------------------------------------
 def selectfood(request):
     name = request.session.get('name', default='Guest')
-    d=list(fooddata.objects.all())
-    return render(request, 'selectfood.html', {'name': name,'list':d})
+    food=list(fooddata.objects.all())
+    foodPack=list(foodpack.objects.all())
+    return render(request, 'selectfood.html', {'name': name,'list':food,'foodpack':foodPack})
 
 
 #--------------------------------------------------------------------------------------
@@ -274,21 +288,22 @@ def mycart(request):
     id=request.session['id']
     c=cart.objects.get(user=id)
     ci=list(cartItem.objects.filter(cart=c))
-    return render(request, 'mycart.html', {'name': name,'cartItem':ci,'cart':c})
+    pi=list(packCart.objects.filter(cart=c))
+    return render(request, 'mycart.html', {'name': name,'cartItem':ci,'cart':c,'foodpack':pi})
 #--------------------------------------------------------------------------------------
 
 def order(request):
     name = request.session.get('name', default='Guest')
     # AvailableFood=list(fooddata.objects.all())
-    if request.method == "POST":
-        cartId=request.POST.get('cartID', '')
-        # MyCartList=list(cartItem.objects.filter(cart=cartId))
-        MyCartList=(cartItem.objects.filter(cart=cartId))
+    # if request.method == "POST":
+    #     cartId=request.POST.get('cartID', '')
+    #     # MyCartList=list(cartItem.objects.filter(cart=cartId))
+    #     MyCartList=(cartItem.objects.filter(cart=cartId))
     
-        print(MyCartList)
+    #     print(MyCartList)
         
             
-        return redirect('mycart')
+    #     return redirect('mycart')
     return render(request, 'order.html', {'name': name})
 
 # ---------------------------------------------------------------------
@@ -301,10 +316,25 @@ def confirmOrder(request):
 def remove(request):
     name = request.session.get('name', default='Guest')
     id=request.session['id']
-    # if request.method == "POST":
-        # c=cart.objects.get(user=id)
-        # cartItem.objects.filter(cart=c).delete()
-        # return redirect('mycart')
+    if request.method == "POST":
+        foodtype=request.POST.get('foodtype', '')
+        AvailableFood=fooddata.objects.get(foodtype=foodtype)
+        c=cart.objects.get(user=id)
+        cartItem.objects.filter(cart=c,foodtype=AvailableFood).delete()
+        return redirect('mycart')
+    return render(request, 'removeall.html', {'name': name})
+
+
+
+def remove1(request):
+    name = request.session.get('name', default='Guest')
+    id=request.session['id']
+    if request.method == "POST":
+        pack=request.POST.get('foodpack', '')
+        AvailableFoodPack=foodpack.objects.get(packName=pack)
+        c=cart.objects.get(user=id)
+        packCart.objects.filter(cart=c,foodpack=AvailableFoodPack).delete()
+        return redirect('mycart')
     return render(request, 'removeall.html', {'name': name})
 # ---------------------------------------------------------------------
 def removeall(request):
@@ -312,6 +342,7 @@ def removeall(request):
     id=request.session['id']
     c=cart.objects.get(user=id)
     cartItem.objects.filter(cart=c).delete()
+    packCart.objects.filter(cart=c).delete()
     return redirect('mycart')
     # return render(request, 'removeall.html', {'name': name})
 

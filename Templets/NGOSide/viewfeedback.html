@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Donation Requests{% endblock title %}</title>
+    <title>{% block title %}view feedback{% endblock title %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {% load static %}
     <link rel="stylesheet" href=" {% static '/css/viewdonationrequest.css' %} ">
     <!-- <style>
@@ -51,13 +51,30 @@
             {% for f in list %}
             <div class="dlist">
                 <tr>
-                    <td>Desc:</td>
+                    <td>
+                        <h1>{{f.user}}</h1>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td>UserName:</td>
+                    <td>{{f.user}}</td>
+                </tr> -->
+                <tr>
+
                     <td>{{f.desc}}</td>
                 </tr>
                 <tr>
-                    <td>uploaded pic:</td>
+
                     <td><img src="{{f.pic.url}}" alt="" class="card-img-top" height="100px"></td>
+
+
                 </tr>
+                <tr>
+                    <td>-----------------------</td>
+                </tr>
+
+                <br>
+                <br>
             </div>
             {% endfor %}
         </table>

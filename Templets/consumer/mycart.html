@@ -27,7 +27,8 @@
                 <li><a href="consumer ">Hi {{name}}</a></li>
                 {% endif %}
                 <li><a href="chome ">Home</a></li>
-                </li>
+                <li><a href="selectfood ">Add Food</a></li>
+
 
             </div>
         </ul>
@@ -41,7 +42,34 @@
             <h1 class="heading">MY CART</h1>
             <h4 class="action"><a href="removeall">Remove all</a></h4>
         </div>
-        <input type="hidden" name="cartID" value={{cart.id}}> {% for cartItem in cartItem %}
+
+        <input type="hidden" name="cartID" value={{cart.id}}> {% for d in foodpack %}
+        <div class="cartItem">
+            <div class="about">
+                <p>
+                    <h2 class="title">{{d.foodpack}}</h2>
+                </p>
+            </div>
+            <div class="counter">
+                <div class="btn" onclick="increment()">+</div>
+                <div class="count" id="counting">0</div>
+                <!-- <div class="count" id="counting"></div> -->
+                <div class="btn" onclick="decrement()">-</div>
+                <!-- <div class="kg">kg</div> -->
+            </div>
+            <div class="prices">
+                <form action="remove1" method="post">
+                    {% csrf_token %}
+                    <!-- <u><a href="remove">Remove</a></u> -->
+                    <input type="hidden" name="foodpack" value="{{d.foodpack}}">
+                    <div><input class="button1" type="submit" value="Remove"></div>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+
+        <br>
+        <hr><br> {% for cartItem in cartItem %}
         <div class="cartItem">
             <div class="about">
                 <p>
@@ -50,13 +78,18 @@
             </div>
             <div class="counter">
                 <div class="btn" onclick="increment()">+</div>
-                <div class="count" id="counting1">{{cartItem.quantity}}</div>
+                <div class="count" id="counting">0</div>
                 <!-- <div class="count" id="counting"></div> -->
                 <div class="btn" onclick="decrement()">-</div>
                 <!-- <div class="kg">kg</div> -->
             </div>
             <div class="prices">
-                <div class="remove"><u><a href="remove">Remove</a></u></div>
+                <form action="remove" method="post">
+                    {% csrf_token %}
+                    <!-- <u><a href="remove">Remove</a></u> -->
+                    <input type="hidden" name="foodtype" value="{{cartItem.foodtype}}">
+                    <div><input class="button1" type="submit" value="Remove"></div>
+                </form>
             </div>
         </div>
         {% endfor %}
@@ -76,7 +109,7 @@
     //initialising a variable name data
 
     var data = 0;
-    var value = document.getElementById("counting1").innerHTML;
+
     console.log(value)
         //printing default value of data that is 0 in h2 tag
     document.getElementById("counting").innerText = data;

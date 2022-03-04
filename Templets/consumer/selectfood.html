@@ -28,58 +28,103 @@
                     <li><a href="consumer">Hi {{name}}</a></li>
                     {% endif %}
                     <li><a href="chome">Home</a></li>
-                    </li>
+                    <li><a href="mycart">My Cart</a></li>
 
                 </div>
             </ul>
         </nav>
     </div>
-    <div class="hadder">
-        <h1>Select food from here</h1>
-    </div>
-    <div class="food">
+
+    <div class="con">
+        <div class="hadder">
+            <h1>Select food from here</h1>
+        </div>
+        <div class="food">
+            <br>
+            <br>
+            <p class="pera">Food quantity in package is for one person.</p>
+        </div>
         <br>
         <br>
-        <p class="pera">Food quantity is based on number of person.Please enter number of person in given input field and click on select button.</p>
-    </div>
-    <br>
-    <br>
+
+        <div class="food-container">
+            {% for d in foodPack %}
+            <form action="selectpack" method="post">
+                {% csrf_token %}
+                <div class="food-card">
+                    <div class="food-image" style="margin-top: 20px;">
+                        <img src="/static/Image/{{d.packName}}.jpg" class="food-thumb" alt="">
+
+                        <div class="centeree">
+                            {% if not d.available %}
+                            <p class="food-availble">Not available</p>
+                            {% else %}
+                            <p></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="food-info">
+
+                        <h2 class="food-brand">{{d.packName}}</h2>
+                        {% if messages %} {% for message in messages %} {% if d.message %}{{message}}{{d.quantity}}<br>{% endif %} {% endfor %} {% endif %}
+
+                        <p>This pack contain:<br> {{d.food1}},&nbsp;&nbsp{{d.food2}},&nbsp;&nbsp{{d.food3}}&nbsp;&nbsp;and &nbsp; {{d.food4}}&nbsp;</p>
 
 
 
-    <div class="food-container">
-        {% for d in list %}
-        <form action="select" method="post">
-            {% csrf_token %}
-            <div class="food-card">
-                <div class="food-image">
-                    <img src="/static/Image/{{d.foodtype}}.jpg" class="food-thumb" alt=""><br>
-
+                        <input type="hidden" name="foodpack" value="{{d.packName}}">
+                        <br>
+                        <input type="submit" value="Select" class="card-btn">
+                        <br>
+                        <a href="selectpack"></a> &nbsp;&nbsp;
+                    </div>
                 </div>
-                <div class="food-info">
-                    <h2 class="food-brand">{{d.foodtype}}</h2>
-                    {% if not d.available  %}<p class="food-availble">Not available</p>
-                    {% else %}
-                    <p><br></p>
-                    {% endif %}
-                    {% if messages %} 
-                    {% for message in messages %}
-                    {% if d.message %}{{message}}{{d.quantity}}<br>{% endif %}
-                    {% endfor %} {% endif %}
+            </form>
+            {% endfor %}
 
-                    <span class="quantity"><input type="text"name="qu" maxlength="4" size="4">
-                        &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </div>
+        <hr>
+        <br>
+        <div class="food-container">
+            {% for d in list %}
+            <form action="select" method="post">
+                {% csrf_token %}
+                <div class="food-card">
+                    <div class="food-image">
+                        <img src="/static/Image/{{d.foodtype}}.jpg" class="food-thumb" alt="">
+
+                        <div class="centeree">
+                            {% if not d.available %}
+                            <p class="food-availble">Not available</p>
+                            {% else %}
+                            <p></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="food-info">
+                        <h2 class="food-brand">{{d.foodtype}}</h2>
+                        <!-- {% if not d.available %}
+                        <p class="food-availble">Not available</p>
+                        {% else %}
+                        <p><br></p>
+                        {% endif %} -->
+                        {% if messages %} {% for message in messages %} {% if d.message %}{{message}}{{d.quantity}}<br>{% endif %} {% endfor %} {% endif %}
+
+                        <!-- <span class="quantity"><input type="text"name="qu" maxlength="4" size="4">
+                            &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
 
 
-                    <input type="hidden" name="foodtype" value="{{d.foodtype}}">
-
-                    <input type="submit" value="Select" class="card-btn">
-                    <a href="confirm"></a> &nbsp;&nbsp;
+                        <input type="hidden" name="foodtype" value="{{d.foodtype}}">
+                        <br>
+                        <input type="submit" value="Select" class="card-btn">
+                        <a href="confirm"></a> &nbsp;&nbsp;
+                    </div>
                 </div>
-            </div>
-        </form>
-        {% endfor %}
+            </form>
+            {% endfor %}
 
+
+        </div>
 
     </div>
 </body>

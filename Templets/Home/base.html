@@ -6,21 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock title %}</title>
-    {% comment %} <link rel="stylesheet" href="/static/css/home.css"> {% endcomment %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static "/css/home.css" %}">
-    <link rel="stylesheet" href="{% static "/css/about.css" %}">
+    {% comment %}
+    <link rel="stylesheet" href="/static/css/home.css"> {% endcomment %} {% load static %}
+    <link rel="stylesheet" href="{% static '/css/home.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="{% static '/css/about.css' %}">
 
     <style>
         .bodyText {
             margin: 30px;
         }
+        
         .menu li {
-            font-size:20px;
+            font-size: 20px;
         }
+        
         .menu li:hover {
             background-color: #2980B9;
         }
+        
         .titlefont {
             font-size: xx-large;
         }
@@ -52,9 +57,9 @@
         </nav>
     </div>
 
-    {% block  content %}{% endblock content %}
-    {% comment %} <script src="/static/javascript/home.js"></script> {% endcomment %}
-  
+    {% block content %}{% endblock content %} {% comment %}
+    <script src="/static/javascript/home.js"></script> {% endcomment %}
+
 </body>
 
 </html>

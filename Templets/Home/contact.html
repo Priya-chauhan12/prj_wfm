@@ -1,4 +1,70 @@
-{% extends 'basehome.html' %}
-{% block homelink %}/{% endblock homelink %}
-{% block aboutlink %}about{% endblock aboutlink %}
-{% block title %}Contect Us | FoodForAll{% endblock title %}
+{% extends 'basehome.html' %} {% block homelink %}/{% endblock homelink %} {% block aboutlink %}about{% endblock aboutlink %} {% block title %}Contect Us | FoodForAll{% endblock title %} {% block content%}
+<div class="main">
+    <img src="/static/Image/cont.jpg" alt="" class="img">
+    <div class="centered">
+        <p class="aq">Any questions?</p>
+        <p class="pera1">We are hear for you</p>
+    </div>
+</div>
+<div class="al">
+    <div class="cform">
+        <div class="tit">
+            <p class="pear2">Please fill this form if you want to share something</p>
+        </div>
+        <div class="fom">
+            <form action="/action_page.php">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+                <label for="lname">Phone No</label>
+                <input type="text" id="pno" name="pno" placeholder="Your phone number..">
+
+
+                <label for="subject">Massage</label>
+                <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="data">
+
+    <div class="about">
+        <div class="one"></div>
+        <div class="two">
+            <p class="who">Who we are</p>
+            <br>
+            <ul>
+                <li class="ab">
+                    <a href="aboutuser">About us</a>
+                </li>
+                <li class="ab"><a href="contactuser">Contact us</a></li>
+            </ul>
+        </div>
+        <div class="three">
+            <p class="who">Get Invoved</p>
+            <br>
+            <li class="ab ">
+                <a href="donate">Donate Food</a>
+            </li>
+        </div>
+        <div class="three">
+            <div class="social">Social</div>
+            <br>
+            <div class="slink">
+                <ul>
+                    <a href="#" class="fa fa-facebook"> </a>&nbsp;
+                    <a href="#" class="fa fa-twitter"> </a>&nbsp;
+                    <a href="#" class="fa fa-instagram"> </a>&nbsp;
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {% endblock content %}

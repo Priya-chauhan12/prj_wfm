@@ -30,7 +30,7 @@ class donation(models.Model):
     quantity=models.IntegerField(default=0)
     dateofc=models.DateField(default='')
     timeofc=models.TimeField(default='')
-    image = models.ImageField(upload_to="myimage",default='')
+    image = models.ImageField(upload_to="prc",default='')
     address=models.CharField(max_length=500,default='')
     status=models.CharField(max_length=10,default='Pending')  
     user=models.ForeignKey(myUser,on_delete=models.CASCADE)
@@ -61,6 +61,17 @@ class fooddata(models.Model):
     # image = models.ImageField(upload_to='images',default='')
     def __str__(Self):
         return Self.foodtype
+
+class foodpack(models.Model):
+    packName=models.CharField(max_length=50,default='')
+    food1=models.CharField(max_length=50,default='')
+    food2=models.CharField(max_length=50,default='') 
+    food3=models.CharField(max_length=50,default='') 
+    food4=models.CharField(max_length=50,default='') 
+    available=models.BooleanField(default=False)
+    message=models.BooleanField(default=False) 
+    def __str__(Self):
+        return Self.packName        
 # cart model
 
 class cart(models.Model):
@@ -79,6 +90,14 @@ class cartItem(models.Model):
 class feedback(models.Model):
     desc=models.CharField(max_length=500)
     pic=models.ImageField(upload_to="con_pic",null=True)
+    user=models.ForeignKey(myUser,on_delete=models.CASCADE,default='')
     def __str__(self):
         return self.desc
+
+class packCart(models.Model):
+    foodpack=models.ForeignKey(foodpack,on_delete=models.CASCADE)
+    quantity=models.CharField(max_length=10,default=0)
+    cart=models.ForeignKey(cart,on_delete=models.CASCADE)
+    def __str__(Self):
+        return Self.foodpack.packName        
 

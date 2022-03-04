@@ -5,9 +5,12 @@
 .hadder {
     margin: 20px;
     text-align: center;
+    font-size: 30px;
+    opacity: .8;
 }
 
-.food-container {
+.food-container,
+.foodpack {
     padding: 0 10vw;
     display: flex;
     overflow-x: auto;
@@ -38,24 +41,13 @@
     object-fit: cover;
 }
 
-.discount-tag {
-    position: absolute;
-    background: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    color: #ff7d7d;
-    right: 10px;
-    top: 10px;
-    text-transform: capitalize;
-}
-
 .card-btn {
-    /* position: absolute; */
+    position: relative;
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     padding: 10px;
-    /* width: 90%; */
+    width: 100%;
     text-transform: capitalize;
     border: none;
     outline: none;
@@ -90,7 +82,9 @@
     line-height: 20px;
     overflow: hidden;
     color: red;
+    background-color: black;
     margin: 5px 0;
+    padding-bottom: 6px;
 }
 
 .quantity {
@@ -110,6 +104,35 @@
 }
 
 .pera {
-    font-size: x-large;
+    font-size: 30px;
     text-align: center;
+    /* padding-left: 140px; */
+    position: relative;
+}
+
+.con {
+    margin: 0;
+    padding: 0;
+}
+
+.centeree {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    /* color: red; */
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    /* background-color: black; */
+    padding: 6px;
+    transform: translate(-50%, -50%);
+}
+
+.centered {
+    font-family: 'Times New Roman', Times, serif;
+    /* font-size: 30px; */
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

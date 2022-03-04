@@ -1,1 +1,44 @@
-{% extends 'base.html' %} {% block title %}About Us | FoodForAll{% endblock title %} {% block type %}consumer{% endblock type %}ngopage {% block homelink %}chome{% endblock homelink %} {% block contactlink %}ccontact{% endblock contactlink %}
+{% extends 'base.html' %} {% block title %}About Us | FoodForAll{% endblock title %} {% block type %}consumer{% endblock type %}ngopage {% block homelink %}chome{% endblock homelink %} {% block contactlink %}ccontact{% endblock contactlink %} {% block
+content %}
+<div class="main">
+    <img src="/static/Image/donate.jpg" alt="" class="img">
+    <div class="centered">
+        <p class="aq">OUR MISSION</p>
+        <p class="pera1">Help every needy people</p>
+    </div>
+</div>
+<div class="data">
+    <div class="about">
+        <div class="one"></div>
+        <div class="two">
+            <p class="who">Who we are</p>
+            <br>
+            <ul>
+                <li class="ab">
+                    <a href="aboutuser">About us</a>
+                </li>
+                <li class="ab"><a href="contactuser">Contact us</a></li>
+            </ul>
+        </div>
+        <div class="three">
+            <p class="who">Get Invoved</p>
+            <br>
+            <li class="ab ">
+                <a href="donate">Donate Food</a>
+            </li>
+        </div>
+        <div class="three">
+            <div class="social">Social</div>
+            <br>
+            <div class="slink">
+                <ul>
+                    <a href="#" class="fa fa-facebook"> </a>&nbsp;
+                    <a href="#" class="fa fa-twitter"> </a>&nbsp;
+                    <a href="#" class="fa fa-instagram"> </a>&nbsp;
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {% endblock content %}

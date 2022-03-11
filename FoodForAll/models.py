@@ -3,7 +3,6 @@ from datetime import datetime
 from email.mime import message
 from email.policy import default
 from operator import mod
-from pyexpat import model
 from time import time
 from django.db import models
 
@@ -22,36 +21,39 @@ class   myUser(models.Model):
         return Self.username
 
 
+
+
+
+class userdetail(models.Model):
+    fullname=models.CharField(max_length=50,default='')
+    phoneno=models.CharField(max_length=50,default = '')
+    aadhar=models.CharField(max_length=50,default = '')
+    address=models.CharField(max_length=500,default='')
+    city=models.CharField(max_length=500,default='')
+    state=models.CharField(max_length=500,default='')
+    zip=models.CharField(max_length=50,default='')
+    user=models.ForeignKey(myUser,on_delete=models.CASCADE)
+    def __str__(Self):
+        return Self.fullname
+
 class donation(models.Model):
     foodt=(
-        ("rice","rice"),("wheat","wheat"),("corn","corn")
+        ("Rice","Rice"),("Wheat","Wheat"),("Corn","Corn"),
+        ("Jowar","Jowar"),("Bajri","Bajri"),("Moong Dal","Moong Dal"),
+        ("Masoor Dal","Masoor Dal"),("Urad Dal","Urad Dal"),("Chana Dal","Chana Dal"),
+        ("Toor Dal","Toor Dal"),("Rajma","Rajma"),("Soy Bean","Soy Bean")
     )
+    donate_date=models.DateTimeField(default=datetime.now) 
     foodtype=models.CharField(max_length=50,default='',choices=foodt)
     quantity=models.IntegerField(default=0)
     dateofc=models.DateField(default='')
     timeofc=models.TimeField(default='')
-    image = models.ImageField(upload_to="prc",default='')
+    # image = models.ImageField(upload_to='images',default='')
     address=models.CharField(max_length=500,default='')
     status=models.CharField(max_length=10,default='Pending')  
-    user=models.ForeignKey(myUser,on_delete=models.CASCADE)
+    user=models.ForeignKey(userdetail,on_delete=models.CASCADE)
     def __str__(Self):
         return Self.foodtype
-
-
-class userdetail(models.Model):
-    g=(
-        ("male","MALE"),("female","FEMALE")
-    )
-    gender=models.CharField(max_length=7,default='',choices=g)
-    firstname=models.CharField(max_length=50,default='')
-    lastname=models.CharField(max_length=50,default='')
-    bdate=models.DateField(default='')
-    phoneno=models.CharField(max_length=50,default = '')
-    aadhar=models.CharField(max_length=50,default = '')
-    address=models.CharField(max_length=500,default='')
-    user=models.ForeignKey(myUser,on_delete=models.CASCADE)
-    def __str__(Self):
-        return Self.firstname
 
 class fooddata(models.Model):
     foodtype=models.CharField(max_length=50,default='')
@@ -62,6 +64,8 @@ class fooddata(models.Model):
     def __str__(Self):
         return Self.foodtype
 
+
+
 class foodpack(models.Model):
     packName=models.CharField(max_length=50,default='')
     food1=models.CharField(max_length=50,default='')
@@ -71,33 +75,35 @@ class foodpack(models.Model):
     available=models.BooleanField(default=False)
     message=models.BooleanField(default=False) 
     def __str__(Self):
-        return Self.packName        
+        return Self.packName       
 # cart model
 
 class cart(models.Model):
-    user=models.ForeignKey(myUser,on_delete=models.CASCADE)
+    user=models.ForeignKey(userdetail,on_delete=models.CASCADE)
     created_date=models.DateTimeField(default=datetime.now)
     def __str__(Self):
-        return Self.user.username
+        return Self.user.fullname
 
 class cartItem(models.Model):
     foodtype=models.ForeignKey(fooddata,on_delete=models.CASCADE)
     quantity=models.CharField(max_length=10,default=0)
     cart=models.ForeignKey(cart,on_delete=models.CASCADE)
+    status=models.CharField(max_length=10,default='Pending')
+    order_date=models.DateTimeField(default=datetime.now) 
     def __str__(Self):
         return Self.foodtype.foodtype
-
-class feedback(models.Model):
-    desc=models.CharField(max_length=500)
-    pic=models.ImageField(upload_to="con_pic",null=True)
-    user=models.ForeignKey(myUser,on_delete=models.CASCADE,default='')
-    def __str__(self):
-        return self.desc
 
 class packCart(models.Model):
     foodpack=models.ForeignKey(foodpack,on_delete=models.CASCADE)
     quantity=models.CharField(max_length=10,default=0)
     cart=models.ForeignKey(cart,on_delete=models.CASCADE)
+    status=models.CharField(max_length=10,default='Pending') 
     def __str__(Self):
-        return Self.foodpack.packName        
+        return Self.foodpack.packName
 
+class feedback(models.Model):
+    desc=models.CharField(max_length=500)
+    pic=models.ImageField(upload_to="images",null=True)
+    user=models.ForeignKey(userdetail,on_delete=models.CASCADE)
+    def __str__(self):
+        return self.user.fullname

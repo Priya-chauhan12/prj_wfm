@@ -25,16 +25,14 @@
                     <label for="checkbox_toggle" class="hamburger">&#9776;</label>
                     <!-- NAVIGATION MENUS -->
                     <div class="menu">
-                        {% if user.is_authenticated %}
-                        <li><a href="users">Hi {{name}}</a></li>
-                        {% endif %}
-                        <li><a href="homeuser">Home</a></li>
+
+                        <li><a href="users">Home</a></li>
                         <!-- <li><a href="donate"> Donate Food</a></li> -->
                         <li><button onclick="myFunction()" class="dropbtn"></i>My Account</button>
                             <div id="myDropdown" class="dropdown-content">
                                 <a href="requeststatus">Request Status</a>
                                 <a href="predonation">View Previous Donations</a>
-                                <a href="#about">Update Profile</a>
+                                <a href="updateprf">Update Peofile</a>
                                 <a href="changepassword">Change Password</a>
 
                             </div>

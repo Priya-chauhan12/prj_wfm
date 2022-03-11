@@ -1,40 +1,57 @@
-{% extends 'base.html' %} {% block type %}ngopage{% endblock type %}ngopage {% block homelink %}homengo{% endblock homelink %} {% block aboutlink %}aboutngo{% endblock aboutlink %} {% block title %}Contect Us | FoodForAll{% endblock title %} {% block
-content%}
-<div class="main">
-    <img src="/static/Image/cont.jpg" alt="" class="img">
-    <div class="centered">
-        <p class="aq">Any questions?</p>
-        <p class="pera1">We are hear for you</p>
+{% extends 'base.html' %} {% block type %}ngopage{% endblock type %} {% block aboutlink %}aboutngo{% endblock aboutlink %} {% block title %}Contect Us | FoodForAll{% endblock title %} {% block content%}
+<div class="mainC">
+    <div class="container text-center ">
+        <p class="aq text-light tex">Any questions?</p>
+        <p class="pera1 text-light">We are hear for you</p>
     </div>
 </div>
 <div class="al">
-    <div class="cform">
-        <div class="tit">
-            <p class="pear2">Please fill this form if you want to share something</p>
-        </div>
-        <div class="fom">
-            <form action="/action_page.php">
-                <label for="fname">First Name</label>
-                <input type="text" id="fname" name="firstname" placeholder="Your name..">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card12 my-6" style="width: 18rem;">
+                    <div>
+                        <img src="/static/Image/contactUs.jpg" class="card-img-top" height="400px" alt="">
 
-                <label for="lname">Last Name</label>
-                <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Share something..!</h3>
+                        <form class="cform">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="name" aria-describedby="emailHelp">
 
-                <label for="lname">Phone No</label>
-                <input type="text" id="pno" name="pno" placeholder="Your phone number..">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 
+                            </div>
+                            <div class="mb-3">
+                                <label for="phoneNo" class="form-label">Phone No.</label>
+                                <input type="email" class="form-control" id="phone" aria-describedby="emailHelp">
 
-                <label for="subject">Massage</label>
-                <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
-
-                <input type="submit" value="Submit">
-            </form>
+                            </div>
+                            <div class="mb-3">
+                                <label for="massage" class="form-label">Massage</label>
+                                <textarea class="form-control" id="massage" rows="3"></textarea>
+                            </div>
+                            <div class="container text-center">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
 </div>
 <div class="data">
-
     <div class="about">
         <div class="one"></div>
         <div class="two">
@@ -67,5 +84,6 @@ content%}
             </div>
         </div>
     </div>
+</div>
 
-    {% endblock content %}
+{% endblock content %}

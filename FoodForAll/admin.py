@@ -3,7 +3,7 @@ from django.contrib import admin
 
 
 
-from .models import myUser,donation,userdetail,cart,cartItem,fooddata,feedback,foodpack,packCart
+from .models import feedback, myUser,donation,userdetail,cart,cartItem,fooddata,foodpack,packCart
 
 
 # # register model
@@ -13,6 +13,6 @@ admin.site.register(userdetail)
 admin.site.register(cart)
 admin.site.register(cartItem)
 admin.site.register(fooddata)
-admin.site.register(feedback)
 admin.site.register(foodpack)
 admin.site.register(packCart)
+admin.site.register(feedback)

@@ -147,3 +147,34 @@ input[type=checkbox] {
     margin-left: auto;
     margin-right: auto;
 }
+
+.status {
+    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5)), url(/static/Image/foodd.jpg);
+    background-size: cover;
+    min-height: 750px;
+}
+
+.rq {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    color: white;
+}
+
+.previous-donation {
+    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5)), url(/static/Image/foodd.jpg);
+    background-size: cover;
+    min-height: 750px;
+}
+
+.row1 {
+    padding-top: 30px;
+}
+
+.pd {
+    padding-top: 30px;
+}
+
+.card {
+    padding-left: 30px;
+}

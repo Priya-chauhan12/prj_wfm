@@ -18,3 +18,16 @@ window.onclick = function(event) {
         }
     }
 }
+
+
+// jquary
+
+
+$(document).ready(function() {
+    console.log("starting")
+    $('.detail').hide();
+    $('.btn1').click(function() {
+        console.log("click on button 1");
+        $('.detail').fadeToggle();
+    });
+});

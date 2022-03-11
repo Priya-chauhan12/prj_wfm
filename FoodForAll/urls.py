@@ -6,9 +6,6 @@ from FoodForAll import views
 
 urlpatterns = [
     path('',views.HomePage,name='HomePage'),
-    path('homeuser',views.homeuser,name='homeuser'),
-    path('homengo',views.homengo,name='homengo'),
-     path('chome',views.chome,name='chome'),
     
     path('login',views.login,name='login'),
     path('register',views.register,name='register'),
@@ -18,9 +15,8 @@ urlpatterns = [
 
     path('userBase',views.userBase,name='userHome'),
     path('users',views.users,name='users'),
-    path('userdetail',views.userdetails,name='userdetail'),
     path('donatefood',views.donatefood,name='donatefood'),
-    path('donate',views.donate,name='donate'),
+     path('donate',views.donate,name='donate'),
     path('requeststatus',views.requeststatus,name='requeststatus'),
     path('predonation',views.predonation,name='predonation'),
     
@@ -31,8 +27,12 @@ urlpatterns = [
     path('afood',views.afood,name='afood'),
     path('confirm',views.confirm,name='confirm'),
     path('cancel',views.cancel,name='cancel'),
+    path('foodrequest',views.foodrequest,name='foodrequest'),
     path('listdoner',views.listdoner,name='listdoner'),
     path('viewfeedback',views.viewfeedback,name='viewfeedback'),
+    path('feedbackinfo',views.feedbackinfo,name='feedbackinfo'),
+    path('ngoregister',views.ngoregister,name='ngoregister'),
+
     path('about',views.about,name='about'),
     path('contact',views.contact,name='contact'),
     path('aboutuser',views.aboutuser,name='aboutuser'),
@@ -42,7 +42,7 @@ urlpatterns = [
     path('aboutngo',views.aboutngo,name='aboutngo'),
     path('contactngo',views.contactngo,name='contactngo'),
     path('changepassword',views.changepassword,name='changepassword'),
-   
+    path('updateprf',views.updateprf,name='updateprf'),
 
     path('registration',views.registration,name='registration') ,
     path('ngoregister',views.ngoregister,name='ngoregister'),
@@ -60,5 +60,8 @@ urlpatterns = [
     path('remove1',views.remove1,name='remove1'),
     path('removeall',views.removeall,name='removeall'),
     path('confirmOrder',views.confirmOrder,name='confirmOrder'),
-    path('feedbackinfo',views.feedbackinfo,name='feedbackinfo'),
+
+
+    path('foodConfirm',views.foodConfirm,name='foodConfirm'),
+    path('previousOrder',views.previousOrder,name='previousOrder'),
 ]

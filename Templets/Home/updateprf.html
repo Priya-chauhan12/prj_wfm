@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/user.css">
+    <link rel="stylesheet" href="/static/css/userBase.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/viewdonationrequest.css">
+    <title>{{name}} | Change Password | FoodForAll</title>
+</head>
+
+<body>
+    <section class="hadder">
+        <div class="message">
+            {% for message in messages %}
+            <li {% if message.tags %} <div class="alert alert-danger alert-dismissible tag">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {% endif %}{{ message }}</li>
+        </div>
+        {% endfor %}
+        </div>
+        <div class="container ">
+            <div class="title-ch ">
+                <h1 class="text-center title-food">Food For All</h1>
+            </div>
+
+            <div class="row ">
+                <div class="col-md-6 offset-md-3">
+                    <div class="card ">
+                        <div class="card-body">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><img src="/static/Image/icons8-user-30.png"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 20px;">UserName :</td>
+                                        <td>{{user.username}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 20px;">Emailid :</td>
+                                        <td>{{user.email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 20px;">Fullname :</td>
+                                        <td>{{us.fullname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 20px;">Contact No :</td>
+                                        <td>{{us.phoneno}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 20px;">Aadharcard No :</td>
+                                        <td>{{us.aadhar}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 20px;">Address :</td>
+                                        <td>{{us.address}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 class="text-center">Change Profile</h2>
+
+                            <!-- for name -->
+                            <form accept="updateprf" method="post">
+                                {% csrf_token %}
+                                <h4>Change Username :</h4>
+                                <div class=" form-group mt-3">
+                                    <input name="username" type="text" class="username-field form-control" placeholder="{{user.username}}">
+                                    <small class="password-field-msg form-text text-danger ml-3">
+                                    </small>
+                                </div>
+                                <!-- for new password -->
+                                <h4>Change Emailid :</h4>
+                                <div class=" form-group mt-3">
+                                    <input name="email" type="text" class="email-field form-control" placeholder="{{user.email}}">
+                                    <small class="password-field-msg form-text text-danger ml-3"></small>
+                                </div>
+                                <h4>Change Fullname :</h4>
+                                <div class=" form-group mt-3">
+                                    <input name="fullname" type="text" class="fullname-field form-control" placeholder="{{us.fullname}}">
+                                    <small class="password-field-msg form-text text-danger ml-3"></small>
+                                </div>
+                                <h4>Change Contact No :</h4>
+                                <div class=" form-group mt-3">
+                                    <input name="phoneno" type="text" class="phoneno-field form-control" placeholder="{{us.phoneno}}">
+                                    <small class="password-field-msg form-text text-danger ml-3"></small>
+                                </div>
+                                <h4>Change Address No :</h4>
+                                <div class=" form-group mt-3">
+                                    <input name="address" type="text" class="address-field form-control" placeholder="{{us.address}}">
+                                    <small class="password-field-msg form-text text-danger ml-3"></small>
+                                </div>
+                                <h4>Change Aadharcard No :</h4>
+                                <div class=" form-group mt-3">
+                                    <input name="aadhar" type="text" class="aadhar-field form-control" placeholder="{{us.aadhar}}">
+                                    <small class="password-field-msg form-text text-danger ml-3"></small>
+                                </div>
+                                <h4>Change City :</h4>
+                                <div class=" form-group mt-3">
+                                    <input name="city" type="text" class="city-field form-control" placeholder="{{us.city}}">
+                                    <small class="password-field-msg form-text text-danger ml-3"></small>
+                                </div>
+                                <h4>Change State :</h4>
+                                <div class=" form-group mt-3">
+                                    <input name="state" type="text" class="state-field form-control" placeholder="{{us.state}}">
+                                    <small class="password-field-msg form-text text-danger ml-3"></small>
+                                </div>
+                                <h4>Change Pincode :</h4>
+                                <div class=" form-group mt-3">
+                                    <input name="zip" type="text" class="zip-field form-control" placeholder="{{us.zip}}">
+                                    <small class="password-field-msg form-text text-danger ml-3"></small>
+                                </div>
+                                <!-- for submit -->
+                                <div class="container text-center">
+                                    <button class="btn btn-outline-primary my-3">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="/static/javascript/userBase.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

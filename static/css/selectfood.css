@@ -39,6 +39,7 @@
     width: 100%;
     height: 350px;
     object-fit: cover;
+    border-radius: 20px;
 }
 
 .card-btn {
@@ -135,4 +136,35 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+
+/* new  */
+
+.select-food {
+    margin-top: 20px;
+    font-size: 35px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 25vw;
+    object-fit: cover;
+}
+
+.previous-orders {
+    margin-top: 0;
+    padding-top: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5)), url(/static/Image/contact.jpg);
+    background-size: cover;
+    min-height: 800px;
+}
+
+.card {
+    padding-left: 50px;
+}
+
+.row1,
+.he {
+    padding-top: 40px;
 }

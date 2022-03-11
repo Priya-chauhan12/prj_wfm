@@ -15,6 +15,11 @@ li {
     list-style: none;
 }
 
+.navigation {
+    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5)), url(/static/Image/foodd.jpg);
+    background-size: cover;
+}
+
 
 /* NAVBAR STYLING STARTS */
 
@@ -25,12 +30,16 @@ li {
     z-index: 100;
 } */
 
+.pic {
+    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5)), url(/static/Image/foodd.jpg) !important;
+}
+
 .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px;
-    background-color: #4c9e9e;
+    /* background-color: #717161; */
     color: #fff;
     height: 100px;
 }
@@ -278,6 +287,10 @@ input[type=checkbox] {
     to {
         opacity: 2
     }
+}
+
+.lastpart {
+    text-align: center;
 }
 
 

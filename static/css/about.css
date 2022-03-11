@@ -152,19 +152,13 @@ html {
     margin: 0;
 }
 
-.centered {
-    font-family: 'Times New Roman', Times, serif;
-    /* font-size: 30px; */
-    color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .aq {
     /* margin-right: 250px; */
     font-size: 70px;
+}
+
+.tex {
+    padding-top: 200px;
 }
 
 .pera1 {
@@ -201,14 +195,6 @@ input[type=submit]:hover {
 
 .cform {
     background-color: rgb(238, 237, 237);
-    border: 1px solid gray;
-    padding: 20px;
-    padding-top: 30px;
-    align-items: center;
-    width: 50%;
-    margin: auto;
-    padding: auto;
-    border-radius: 10px;
 }
 
 .pear2 {
@@ -220,4 +206,35 @@ input[type=submit]:hover {
 
 .al {
     padding-top: 30px;
+}
+
+.main {
+    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5)), url(/static/Image/donate.jpg);
+    background-size: cover;
+    height: 600px;
+}
+
+.mainC {
+    background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, .6)), url(/static/Image/cont.jpg);
+    background-size: cover;
+    height: 600px;
+}
+
+.al {
+    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5)), url(/static/Image/donate.jpg);
+    background-size: cover;
+}
+
+.card {
+    margin-bottom: 40px;
+    background-color: rgb(238, 237, 237);
+}
+
+.card-img-top {
+    border-radius: 50px !important;
+}
+
+.card12 {
+    margin-top: 70px;
+    border-radius: 50px !important;
 }

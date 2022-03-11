@@ -4,21 +4,40 @@
 
 </style>
 {% endblock cssfile %} {% block contant %}
-<div class="hd">
-    <h2>Available Food</h2>
-</div>
-<div class="food-container">
-    {% for d in list %}
-    <div class="food-card">
-        <div class="food-image">
 
-            <img src="/static/Image/{{d.foodtype}}.jpg" class="food-thumb" alt=""><br>
 
-        </div>
-        <div class="food-info">
-            <h2 class="food-brand">{{d.foodtype}}</h2>
-            <!-- <p class="food-short-des"></p> -->
-            <span class="quantity">{{d.quantity}} KG</span>
+<section class="food">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="container text-center mt-3">
+                    <h1>Availabe Food</h1>
+                </div>
+
+                <div class="row">
+                    {% for d in list %}
+
+                    <div class="col-md-4">
+                        <div class="card bg-light text-dark mt-3">
+                            <div class="card-body">
+                                <div class="category-image">
+                                    <img src="/static/Image/{{d.foodtype}}.jpg" class="card-img-top" alt="">
+
+
+                                </div>
+                                <h4>{{d.foodtype}}</h4><br>
+                                <h4>{{d.quantity}} KG</h4>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
-    {% endfor %} {% endblock contant %}
+
+</section> {% endblock contant %}

@@ -155,16 +155,40 @@
 .previous-orders {
     margin-top: 0;
     padding-top: 0;
-    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5)), url(/static/Image/contact.jpg);
+    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .8)), url(/static/Image/contact.jpg);
     background-size: cover;
-    min-height: 800px;
+    min-height: 700px;
 }
 
 .card {
-    padding-left: 50px;
+    padding-left: 0px;
 }
 
 .row1,
 .he {
     padding-top: 40px;
+}
+
+.packag {
+    margin-top: 0;
+    padding-top: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5)), url(/static/Image/contact.jpg);
+    background-size: cover;
+    /* max-height: 4000px; */
+}
+
+.ax {
+    background-color: rgba(255, 255, 255, .5) !important;
+}
+
+.tx {
+    color: black;
+}
+
+.abc {
+    border-radius: 5px;
+}
+
+.abv {
+    color: red;
 }

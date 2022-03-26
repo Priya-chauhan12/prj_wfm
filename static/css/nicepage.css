@@ -7,6 +7,10 @@
  * Copyright 2014-2021 Froala Labs
  */
 
+* {
+    font-family: 'Times New Roman', Times, serif !important;
+}
+
 .fr-clearfix::after {
     clear: both;
     display: block;
@@ -40557,10 +40561,12 @@ h2.u-subtitle {
 
 h1:not(.u-title) {
     font-weight: 400;
-    font-size: 3rem;
+    font-size: 5rem;
     line-height: 1.1;
     margin-top: 20px;
     margin-bottom: 20px;
+    /* color: black; */
+    font-family: 'Times New Roman', Times, serif !important;
 }
 
 h2:not(.u-subtitle) {

@@ -12,26 +12,27 @@ urlpatterns = [
     path('registerview',views.registerview,name='registerview'),
     path('logout',views.logout,name='logout'),
     path('gallery',views.gallery,name='gallery'),
+    path('updateProfile',views.updateProfile,name='updateProfile'),
+    path('updateProfilec',views.updateProfilec,name='updateProfilec'),
 
-    path('userBase',views.userBase,name='userHome'),
+   
     path('users',views.users,name='users'),
     path('donatefood',views.donatefood,name='donatefood'),
      path('donate',views.donate,name='donate'),
     path('requeststatus',views.requeststatus,name='requeststatus'),
     path('predonation',views.predonation,name='predonation'),
+    path('mealFood',views.mealFood,name='mealFood'),
     
-    path('ngo',views.ngoBase,name='ngo'),
-    path('ngodetail',views.ngodetail,name='ngodetail'),
+    path('cookedMealRequest',views.cookedMealRequest,name='cookedMealRequest'),
+    path('availableCookedMeal',views.availableCookedMeal,name='availableCookedMeal'),
     path('ngopage',views.ngopage,name='ngopage'),
     path('viewdonationrequest',views.viewdonationrequest,name='viewdonationrequest'),
     path('afood',views.afood,name='afood'),
-    path('confirm',views.confirm,name='confirm'),
-    path('cancel',views.cancel,name='cancel'),
     path('foodrequest',views.foodrequest,name='foodrequest'),
     path('listdoner',views.listdoner,name='listdoner'),
     path('viewfeedback',views.viewfeedback,name='viewfeedback'),
     path('feedbackinfo',views.feedbackinfo,name='feedbackinfo'),
-    path('ngoregister',views.ngoregister,name='ngoregister'),
+    path('createPakage',views.createPakage,name='createPakage'),
 
     path('about',views.about,name='about'),
     path('contact',views.contact,name='contact'),
@@ -42,13 +43,15 @@ urlpatterns = [
     path('aboutngo',views.aboutngo,name='aboutngo'),
     path('contactngo',views.contactngo,name='contactngo'),
     path('changepassword',views.changepassword,name='changepassword'),
-    path('updateprf',views.updateprf,name='updateprf'),
+   
 
     path('registration',views.registration,name='registration') ,
     path('ngoregister',views.ngoregister,name='ngoregister'),
     path('donerregister',views.donerregister,name='donerregister'),
     path('consumerregister',views.consumerregister,name='consumerregister'),
-    
+    path('confirm',views.confirm,name='confirm'),
+    path('cancel',views.cancel,name='cancel'),
+    path('addpics',views.addpics,name='addpics'),
 
     path('consumer',views.consumer,name='consumer'),
     path('selectfood',views.selectfood,name='selectfood') ,
@@ -63,5 +66,8 @@ urlpatterns = [
 
 
     path('foodConfirm',views.foodConfirm,name='foodConfirm'),
+    path('foodcancel',views.foodcancel,name='foodcancel'),
+    path('packconfirm',views.packconfirm,name='packconfirm'),
+    path('packcancel ',views.packcancel ,name='packcancel '),
     path('previousOrder',views.previousOrder,name='previousOrder'),
 ]

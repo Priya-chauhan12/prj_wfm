@@ -84,7 +84,7 @@ body {
     .body-part {
         background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5)), url(/static/Image/foodd.jpg);
         background-size: cover;
-        height: 720px;
+        min-height: 620px;
     }
     
     .title-t {
@@ -129,7 +129,7 @@ body {
     .hadder {
         background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5)), url(/static/Image/foodd.jpg);
         background-size: cover;
-        height: 800px;
+        min-height: 680px;
     }
     
     .title-d {
@@ -152,4 +152,10 @@ body {
     
     .card {
         margin-bottom: 30px !important;
+    }
+    
+    .ph {
+        margin-top: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }

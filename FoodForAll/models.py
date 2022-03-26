@@ -3,6 +3,7 @@ from datetime import datetime
 from email.mime import message
 from email.policy import default
 from operator import mod
+from pyexpat import model
 from time import time
 from django.db import models
 
@@ -66,12 +67,21 @@ class fooddata(models.Model):
 
 
 
+
+
 class foodpack(models.Model):
+    foodt=(
+        ("Rice","Rice"),("Wheat","Wheat"),("Corn","Corn"),
+        ("Jowar","Jowar"),("Bajri","Bajri"),("Moong Dal","Moong Dal"),
+        ("Masoor Dal","Masoor Dal"),("Urad Dal","Urad Dal"),("Chana Dal","Chana Dal"),
+        ("Toor Dal","Toor Dal"),("Rajma","Rajma"),("Soy Bean","Soy Bean")
+    )
     packName=models.CharField(max_length=50,default='')
-    food1=models.CharField(max_length=50,default='')
-    food2=models.CharField(max_length=50,default='') 
-    food3=models.CharField(max_length=50,default='') 
-    food4=models.CharField(max_length=50,default='') 
+    food1=models.CharField(max_length=50,default='',choices=foodt)
+    food2=models.CharField(max_length=50,default='',choices=foodt) 
+    food3=models.CharField(max_length=50,default='',choices=foodt) 
+    food4=models.CharField(max_length=50,default='',choices=foodt)
+    quantity=models.CharField(max_length=10,default='') 
     available=models.BooleanField(default=False)
     message=models.BooleanField(default=False) 
     def __str__(Self):
@@ -97,7 +107,8 @@ class packCart(models.Model):
     foodpack=models.ForeignKey(foodpack,on_delete=models.CASCADE)
     quantity=models.CharField(max_length=10,default=0)
     cart=models.ForeignKey(cart,on_delete=models.CASCADE)
-    status=models.CharField(max_length=10,default='Pending') 
+    status=models.CharField(max_length=10,default='Pending')
+    order_date=models.DateTimeField(default=datetime.now) 
     def __str__(Self):
         return Self.foodpack.packName
 
@@ -107,3 +118,8 @@ class feedback(models.Model):
     user=models.ForeignKey(userdetail,on_delete=models.CASCADE)
     def __str__(self):
         return self.user.fullname
+class gallarypics(models.Model):
+    pics=models.ImageField(upload_to="img")
+    user=models.ForeignKey(myUser,on_delete=models.CASCADE)
+    def __str__(self):
+        return self.user

@@ -17,121 +17,109 @@
 </head>
 
 <body>
-    <!-- navigation bar -->
-    <div class="navigation">
-        <nav class="navbar">
-            <!-- LOGO -->
-            <div class="logo">FoodForAll</div>
-            <!-- NAVIGATION MENU -->
-            <ul class="nav-links">
-                <!-- USING CHECKBOX HACK -->
-                <input type="checkbox" id="checkbox_toggle" />
-                <label for="checkbox_toggle" class="hamburger">&#9776;</label>
-                <!-- NAVIGATION MENUS -->
-                <div class="menu">
-                    <li><a href="consumer">Home</a></li>
-                    <!-- <li><a href="selectfood"> Select Food</a></li> -->
-                    <!-- <li><button onclick="myFunction()" class="dropbtn">My Account</button>
-                        <div id="myDropdown" class="dropdown-content">
-                            <a href="mycart">My Cart</a>
-                            <a href="previousOrder">View Previous Order</a>
-                            <a href="#about">Update Peofile</a>
-                            <a href="changepassword">Change Password</a>
-
-                        </div>
-                    </li> -->
-
-                </div>
-            </ul>
-        </nav>
-    </div>
-    <!-- endof navigation bar  -->
 
     <!-- display previous orders  -->
 
     <section class="previous-orders">
+        <!-- navbar -->
+        <div>
+            <section>
+                <div class="container">
+                    <nav class="navbar abx navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+                        <a class="navbar-brand" href="consumer">FoodForAll</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="ccontact">Contact Us <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="gallery">Gallery</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        My Account
+                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="previousOrder">View Previous Order</a>
+                                        <a class="dropdown-item" href="feedbackinfo">Give Feedback</a>
+                                        <a class="dropdown-item" href="cabout">About Us</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="updateProfilec">Update Profile</a>
+                                        <a class="dropdown-item" href="changepassword">Change Password</a>
+                                        <a class="dropdown-item" href="logout">Logout</a>
+                                    </div>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </nav>
+                </div>
+                <!-- endof navbar  -->
+                <!-- message  -->
+                <div class="message">
+                    {% for message in messages %}
+                    <li {% if message.tags %} <div class="alert alert-success my-0 alert-dismissible tag">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {% endif %}{{ message }}</li>
+                </div>
+                {% endfor %}
+        </div>
+
         <div class="container">
+            <h2 class="he text-center text-light">Your Previous Orders</h2>
+            <br>
             <div class="detail ">
-                {% for food in j %}
-                <div class="row my-2">
-                    <div class="col-sm-12">
-                        <div class="card cardm">
-                            <div class="card-body">
-                                <div class="row">
-                                    <table>
-                                        <tr>
-                                            <td>Food Type:</td>
-                                            <td>{{food.foodtype}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Food Quantity:</td>
-                                            <td>{{food.quantity}} KG</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Status:</td>
-                                            <td>{{food.status}}</td>
-                                        </tr>
+                <table class="table table-hover" style="background-color: rgba(255, 255, 255, .5);">
+                    <thead class="thead-light">
+                        <tr style="color: black;">
+                            <th></th>
+                            <th scope="col">Food Type</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Date of Order</th>
 
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for d in Packitem %}
+                        <tr class="text-dark">
+                            <td></td>
+                            <td>{{d.foodpack}}</td>
+                            <td>{{d.quantity}}&nbsp;PACKAGE</td>
+                            <td>{{d.status}}</td>
+                            <td>{{d.order_date}}</td>
+                        </tr>
+                        {% endfor %}
 
+                        <!-- ----------------------------------------- -->
+                        {% for food in cartItem %}
+                        <tr class="text-dark">
+                            <td></td>
+                            <td>{{food.foodtype}}</td>
+                            <td>{{food.quantity}}&nbsp;KG</td>
+                            <td>{{food.status}}</td>
+                            <td>{{food.order_date}}</td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            {% endfor %}
-
-            <!-- ----------------------------------------- -->
-            {% for food in item %}
-            <div class="container text-center text-white">
-                <h2 class="he">Your Previous Orders</h2>
-            </div>
-            <div class=" row row1 ">
-                <div class="col-sm-6 offset-md-3">
-                    <div class="card ">
-                        <div class="card-body ">
-                            <div class="row ">
-                                <table>
-                                    <tr>
-                                        <td style="padding-right: 60px;">Food Type:</td>
-                                        <td>{{food.foodtype}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Food Quantity:</td>
-                                        <td>{{food.quantity}} KG</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status:</td>
-                                        <td>Panding</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Date of Order:</td>
-                                        <td>{{food.order_date}}</td>
-                                    </tr>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
-        {% endfor %}
-
-        </div>
-        </div>
-    </section>
+        </section>
 
 
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
 </body>
 
 </html>

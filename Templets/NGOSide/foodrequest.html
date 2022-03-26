@@ -12,176 +12,224 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>{% block title %}Food Requests{% endblock title %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {% load static %}
-    <link rel="stylesheet" href=" {% static '/css/viewdonationrequest.css' %} ">
+    <!-- <link rel="stylesheet" href=" {% static '/css/viewdonationrequest.css' %} "> -->
+    <link rel="stylesheet" href="/static/css/userBase.css">
 
 </head>
 
 <body>
-    <!-- navbar  -->
-    <div class="navigation">
-        <nav class="navbar">
-            <!-- LOGO -->
-            <div class="logo">FoodForAll</div>
-            <!-- NAVIGATION MENU -->
-            <ul class="nav-links">
-                <!-- USING CHECKBOX HACK -->
-                <input type="checkbox" id="checkbox_toggle" />
-                <label for="checkbox_toggle" class="hamburger">&#9776;</label>
-                <!-- NAVIGATION MENUS -->
-                <div class="menu">
-                    <li><a href="ngopage">Home</a></li>
-                    </li>
 
-                </div>
-            </ul>
-        </nav>
-    </div>
-
-    <!-- endof navbar  -->
     <!-- food orders  -->
-    <div class="main">
-        <section class="orders">
-            <div class="title  text-center title-fr">
-                <h1>Pending Requests</h1>
-            </div>
+    <div class="header">
+        <!-- navbar -->
+
+        <section class="">
             <div class="container">
-                {% for food in foodOrder %}
-                <div class="row my-2">
-                    <div class="col-sm-12">
-                        <div class="card card1  text-center" style="max-width: 58rem;">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <h5 class="card-title">{{food}}</h5>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p class="card-text"> {{food.quantity}} KG</p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <form action="foodConfirm" method="post">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="fid" value="{{food.id}}">
-                                            <input type="submit" value="Confirm" class="btn btn-primary">
-                                            <a href="foodConfirm"></a>
-                                            <input type="submit" value="Cencel" class="btn btn-primary">
-                                            <a href=" confirm "></a>
-                                        </form>
-                                    </div>
+                <nav class="navbar abx navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+                    <a class="navbar-brand" href="ngopage">FoodForAll</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="contactngo">Contact Us <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="gallery">Gallery</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            My Account
+                        </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="afood">Available Food</a>
+                                    <a class="dropdown-item" href="viewfeedback">View Feedback</a>
+                                    <a class="dropdown-item" href="listdoner">List of all Donations</a>
+                                    <a class="dropdown-item" href="aboutngo">About Us</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#about">Update Profile</a>
+                                    <a class="dropdown-item" href="changepassword">Change Password</a>
+                                    <a class="dropdown-item" href="logout">Logout</a>
                                 </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </nav>
+            </div>
+            <!-- endof navbar  -->
+            <!-- message  -->
+            <div class="message">
+                {% for message in messages %}
+                <li {% if message.tags %} <div class="alert alert-success my-0 alert-dismissible tag">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {% endif %}{{ message }}</li>
+            </div>
+            {% endfor %}
+
+    </div>
+    <section class="orders">
+        <div class="title  text-center title-fr">
+            <br>
+            <h1>Pending Requests</h1>
+            <br>
+        </div>
+        <div class="container">
+            <table class="table table-hover" style="background-color: rgba(255, 255, 255, .5);">
+                <thead class="thead-light">
+                    <tr style="color: black;">
+                        <th></th>
+                        <th scope="col">Food Type</th>
+                        <th scope="col">Quantity</th>
+                        <!-- <th scope="col">Status</th> -->
+                        <th scope="col">Date of Order</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in foodOrder %}
+                    <div class="row my-2">
+                        <tr class="text-dark">
+                            <td></td>
+                            <td>{{d}}</td>
+                            <td>{{d.quantity}}&nbsp;KG</td>
+                            <!-- <td>{{d.status}}</td> -->
+                            <td>{{d.order_date}}</td>
+                            <td>
+                                <form action="foodConfirm" method="post">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="fid" value="{{d.id}}">
+                                    <input type="submit" value="Confirm" class="btn btn-primary">
+                                    <a href="foodConfirm"></a>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="foodConfirm" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="fid" value="{{d.id}}">
+                                    <input type="submit" value="Cencel" class="btn btn-primary">
+                                    <a href=" foodcancel"></a>
+                                </form>
+                            </td>
+                            <td>
                                 <div class="btn1 ">
                                     <a href="#" class="btn btn-primary">User Details</a>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </td>
+                        </tr>
 
-                <!-- display user details  -->
-                <div class="detail ">
-                    <div class="row my-2">
-                        <div class="col-sm-12">
-                            <div class="card card-header text-light" style="max-width: 58rem;">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <table>
-                                            <tr>
-                                                <td style="padding-right: 50px;">Full Name:</td>
-                                                <td>{{food.cart.user}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email:</td>
-                                                <td>{{food.cart.user.user.email}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Phone No.</td>
-                                                <td>{{food.cart.user.phoneno}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Address:</td>
-                                                <td>{{food.cart.user.address}},&nbsp;{{food.cart.user.city}},&nbsp;{{food.cart.user.state}},&nbsp;{{food.cart.user.zip}}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                {% endfor %}
-            </div>
-        </section>
-        <!-- endof food orders -->
 
-        <!-- for package orders  -->
-        <section class="orders">
-            <div class="title  text-center title-fr">
-                <!-- <h1>Pending Requests</h1> -->
-            </div>
-            <div class="container">
-                {% for food in packOrder %}
-                <div class="row my-2">
-                    <div class="col-sm-12">
-                        <div class="card card1 text-center" style="max-width: 58rem;">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <h5 class="card-title">{{food}}</h5>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p class="card-text"> {{food.quantity}} KG</p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input type="submit" value="Confirm" class="btn btn-primary">
-                                        <a href=" confirm "></a>
-                                        <input type="submit" value="Cencel" class="btn btn-primary">
-                                        <a href=" confirm "></a>
 
-                                    </div>
-                                </div>
+                        <tr class="text-dark detail">
+                            <td></td>
+                            <td>Name:{{d.cart.user}}</td>
+                            <td>Address:{{d.cart.user.address}},&nbsp;{{d.cart.user.city}},&nbsp;{{d.cart.user.state}}</td>
+                            <td>Phone no:{{d.cart.user.phoneno}}
+                            </td>
+                        </tr>
+
+
+
+                        {% endfor %}
+
+                        <!-- endof food orders -->
+
+                        <!-- for package orders  -->
+
+                        {% for food in packOrder %}
+                        <tr class="text-dark">
+                            <td></td>
+                            <td>{{food}}</td>
+                            <td>{{food.quantity}}&nbsp;PACKAGE</td>
+                            <!-- <td>{{food.status}}</td> -->
+                            <td>{{food.order_date}}</td>
+                            <td>
+                                <form action="packconfirm" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="fid" value="{{food.id}}">
+                                    <input type="submit" value="Confirm" class="btn btn-primary">
+                                    <a href=" packconfirm "></a>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="packcancel" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="fid" value="{{food.id}}">
+                                    <input type="submit" value="Cencel" class="btn btn-primary">
+                                    <a href=" packcancel "></a>
+                                </form>
+                            </td>
+                            <td>
                                 <div class="btn1 ">
-                                    <a href="# " class="btn btn-primary ">User Details</a>
+                                    <a href="#" class="btn btn-primary">User Details</a>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </td>
+                        </tr>
+                        <tr class="text-dark detail">
+                            <td></td>
+                            <td>Name:{{food.cart.user}}</td>
+                            <td>Address:{{food.cart.user.address}},&nbsp;{{food.cart.user.city}},&nbsp;{{food.cart.user.state}}</td>
+                            <td>Phone no:{{food.cart.user.phoneno}}
+                            </td>
+                        </tr>
+                        <!-- display user details  -->
 
-                <!-- display user details  -->
-                <div class="detail ">
-                    <div class="row my-2 ">
-                        <div class="col-sm-12 ">
-                            <div class="card card-header text-light" style="max-width: 58rem;">
-                                <div class="card-body ">
-                                    <div class="row ">
-                                        <table>
-                                            <tr>
-                                                <td>User name:</td>
-                                                <td>{{food.cart.user}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>User Email</td>
-                                                <td>{{food.cart.user.email}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>User Phone No.</td>
-                                                <td>{{food.cart.user.phoneno}}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        {% endfor %}
+                </tbody>
+            </table>
 
-                </div>
-                {% endfor %}
-            </div>
-        </section>
+
+    </section>
 
     </div>
     <!-- end of package orders  -->
     {% block content %} {% endblock content %}
+    <section class="mainbox my-3">
+        <div class="">
+            <div class="row ">
+                <div class="col-sm my-3  text-center">
+                    <a class="navbar-brand" href="ngopage">
+                        <p class="text-dark">FoodForAll</p>
+                    </a>
+                </div>
+                <div class="col-sm my-3">
+                    <p class="who">Who we are</p>
+
+                    <li class="ab ">
+                        <a href="aboutngo">About us</a>
+                    </li>
+                    <li class="ab "><a href="contactngo">Contact us</a></li>
+
+                </div>
+                <div class="col-sm my-3">
+                    <p class="who ">Get Invoved</p>
+                    <li class="ab ">
+                        <a href="register">Donate Food</a>
+                    </li>
+                </div>
+                <div class="col-sm my-3">
+                    <div class="text-center">Social</div>
+                    <div class="">
+                        <a href="#" class="fa fa-facebook"> </a>&nbsp;
+                        <a href="#" class="fa fa-twitter"> </a>&nbsp;
+                        <a href="#" class="fa fa-instagram"> </a>&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer bg-dark">
+        <div class="container text-center text-white">
+            <p class="ph">Created For FoodForAll &nbsp;&nbsp;&nbsp;&nbsp;|<i class="fa fa-envelope"></i>foodforall@gmail.com</p>
+        </div>
+    </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 

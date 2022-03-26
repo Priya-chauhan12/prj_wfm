@@ -1,18 +1,12 @@
 
-from ast import If
-from copyreg import pickle
+from argparse import MetavarTypeHelpFormatter
 from email.policy import default
-from re import U
-from statistics import quantiles
+from this import d
 from django.contrib import messages
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User, auth
-from django.template import context
-from django.db.models import Sum
-from pymysql import NULL
-from FoodForAll.models import cartItem, feedback, fooddata, foodpack, myUser,cart, packCart
-from FoodForAll.models import donation,userdetail
+from django.contrib.auth.models import User
+from FoodForAll.models import cartItem, feedback, fooddata, foodpack, gallarypics, myUser,cart, packCart
+from FoodForAll.models import donation,userdetail,gallarypics
 
 
 
@@ -30,13 +24,14 @@ def login(request):
                 request.session['name'] = username
                 request.session['id']=i.id
                 usertype = i.usertype
+                messages.info(request, 'Login successfuly..!')
                 if usertype == 'ngo':
                     return redirect('ngopage')
                 elif usertype=='doner':
                     return redirect('users')
                 else:
                      return redirect('consumer')
-        messages.info(request, 'Inavlid Username/Password')
+        messages.info(request, 'Inavlid Username/Password..!')
         return render(request, 'login.html')
     else:
         return render(request, 'login.html')
@@ -93,9 +88,13 @@ def donerregister(request):
         state = request.POST.get('state', '')
         zip = request.POST.get('zip', '')
         usertype = 'doner'
-        print(password1)
-        print(password2)
-        if password1 == password2:
+        if User.objects.filter(username=username).exists():
+            messages.info(request, 'Username already exists..!')
+            return redirect('donerregister')
+        elif User.objects.filter(email=email).exists():
+            messages.info(request, 'Email already exists..!')
+            return redirect('donerregister')
+        else:
             user = User(password=password1, username=username, email=email)
             user.save()
             alluser = myUser(username=username, email=email,
@@ -107,9 +106,8 @@ def donerregister(request):
             request.session['name'] = username
             messages.info(request, 'Register successfully..!')
             return redirect('login')     
-        else:
-            messages.info(request, 'dont match password')
-            return redirect('donerregister')
+        
+           
 
     else:
         return render(request, 'donerregister.html')
@@ -129,7 +127,13 @@ def consumerregister(request):
         state = request.POST.get('state', '')
         zip = request.POST.get('zip', '')
         usertype = 'consumer'
-        if password1 == password2:
+        if User.objects.filter(username=username).exists():
+            messages.info(request, 'Username already exists..!')
+            return redirect('consumerregister')
+        elif User.objects.filter(email=email).exists():
+            messages.info(request, 'Email already exists..!')
+            return redirect('consumerregister')
+        else:
             user = User(password=password1, username=username, email=email)
             user.save()
             alluser = myUser(username=username, email=email,
@@ -143,11 +147,9 @@ def consumerregister(request):
             
             messages.info(request, 'Register successfully..!')
             return redirect('login')     
-        else:
-            messages.info(request, 'dont match password')
-            return redirect('consumerregister')
     else:
         return render(request, 'consumerregister.html')
+
 
 def registration(request):
     return render(request, 'registration.html')
@@ -185,6 +187,7 @@ def donatefood(request):
         d = donation(user=user, foodtype=foodtype, quantity=quantity,
                         status=status,dateofc=dateofc, timeofc=timeofc, address=address)
         d.save()
+        messages.info(request,"Donate food successfuly..!")
         return redirect('users')
     else:
         return render(request, 'donatefood.html')
@@ -206,7 +209,7 @@ def requeststatus(request):
     
     return render(request, 'requeststatus.html', {'name': name,'list':df})
 #----------------------------------------------------------------------------------
-
+# confirm donation request
 def confirm(request):
     name = request.session.get('name', default='Guest')
     if request.method == "POST":
@@ -231,17 +234,18 @@ def cancel(request):
         fd=donation.objects.get(id=fid)
         fd.status="cancel"
         fd.save()
+        return redirect('viewdonationrequest')
     return render(request, 'cancel.html', {'name': name})
 
 
 # ------------------------------------------------------------------------------------
+# add to cart 
 def select(request):
     name = request.session.get('name', default='Guest')
     if request.method == "POST":
         id=request.session['id']
         foodtype=request.POST.get('foodtype', '')
         foodQuantity=request.POST.get('foodq', '')
-        print(foodQuantity)
         AvailableFood=fooddata.objects.get(foodtype=foodtype)
         foodtype=AvailableFood
         AvailableFoodQuantity=AvailableFood.quantity
@@ -252,8 +256,7 @@ def select(request):
             ci=cartItem(foodtype=foodtype,quantity=foodQuantity,cart=c)
             ci.save()
             messages.info(request, 'Added to Cart..!')
-        else:
-            
+        else: 
             messages.error(request, 'Not Available..!')
         return redirect('selectfood')
     return render(request, 'select.html', {'name': name,'food':AvailableFood})
@@ -266,11 +269,16 @@ def selectpack(request):
         pack=request.POST.get('foodpack', '')
         AvailableFoodPack=(foodpack.objects.get(packName=pack))
         FoodPack=AvailableFoodPack
-        id=myUser.objects.get(username=name)
-        user=userdetail.objects.get(user=id)
-        c=cart.objects.get(user=user)
-        ci=packCart(foodpack=FoodPack ,quantity=packQuantity,cart=c)
-        ci.save()
+        AvailableQuentity=FoodPack.quantity
+        if int(AvailableQuentity)>=int(packQuantity):
+            id=myUser.objects.get(username=name)
+            user=userdetail.objects.get(user=id)
+            c=cart.objects.get(user=user)
+            ci=packCart(foodpack=FoodPack ,quantity=packQuantity,cart=c)
+            ci.save()
+            messages.info(request, 'Added to Cart..!')
+        else: 
+            messages.error(request, 'Not Available..!')
         return redirect('selectfood')
     return render(request, 'select.html', {'name': name})
 #--------------------------------------------------------------------------------------
@@ -285,10 +293,21 @@ def afood(request):
 
 
 #--------------------------------------------------------------------------------------
+# dispaly all food to consumer
 def selectfood(request):
     name = request.session.get('name', default='Guest')
     food=list(fooddata.objects.all())
+    for i in food:
+        if int(i.quantity)==0:
+            i.available=False
+            i.save()
+        else:
+            i.available=True
+            i.save()
     foodPack=list(foodpack.objects.all())
+    for i in foodPack:
+        if i.quantity=='0':
+            i.delete()
     return render(request, 'selectfood.html', {'name': name,'list':food,'foodPack':foodPack})
 
 
@@ -310,8 +329,8 @@ def order(request):
     id=request.session['id']
     if request.method == "POST":
         cartId=request.POST.get('cartID', '')
-        foodpackList=packCart.objects.filter(cart=cartId)
-        MyCartList=cartItem.objects.filter(cart=cartId)
+        foodpackList=packCart.objects.filter(cart=cartId,status='Pending')
+        MyCartList=cartItem.objects.filter(cart=cartId,status='Pending')
         for x in foodpackList:
             x.status='send'
             x.save()
@@ -393,7 +412,41 @@ def foodConfirm(request):
             availableFood.save()
             foodItem.status="confirm"
             foodItem.save()
-    return render(request, 'ngopage.html', {'name': name})
+            return redirect('foodrequest')
+    return render(request, 'foodrequest.html', {'name': name})
+
+
+
+# --------------------------------------------------------------------
+def packconfirm(request):
+    name = request.session.get('name', default='Guest')
+    if request.method == "POST":
+        fid=request.POST.get('fid', '')
+        print(fid)
+        foodItem=packCart.objects.get(id=fid)
+        foodId=foodItem.foodpack.id
+        availableFood=foodpack.objects.get(id=foodId)
+        availableQuantity=availableFood.quantity
+        requiredQuantity=foodItem.quantity
+        if int(availableQuantity)>=int(requiredQuantity):
+            x=int(availableQuantity)-int(requiredQuantity)
+            availableFood.quantity=x
+            print(availableFood.quantity)
+            availableFood.save()
+            foodItem.status="confirm"
+            foodItem.save()
+            return redirect('foodrequest')
+    return render(request, 'foodrequest.html', {'name': name})
+
+# ---------------------------------------------------------------------
+def packcancel (request):
+    name = request.session.get('name', default='Guest')
+    return render(request, 'gallery.html', {'name': name})
+
+# ---------------------------------------------------------------------
+def foodcancel(request):
+    name = request.session.get('name', default='Guest')
+    return render(request, 'gallery.html', {'name': name})
 # ---------------------------------------------------------------------
 def gallery(request):
     name = request.session.get('name', default='Guest')
@@ -401,14 +454,6 @@ def gallery(request):
 def ngopage(request):
     name = request.session.get('name', default='Guest')
     return render(request, 'ngopage.html', {'name': name})
-
-
-def ngodetail(request):
-    name = request.session.get('name', default='Guest')
-    return render(request, 'ngodetails.html', {'name': name})
-
-
-
 
 
 def about(request):
@@ -447,27 +492,13 @@ def HomePage(request):
 
 
 # ------------------------------------------------------------------------------
-# for all users
-
-
-def userBase(request):
-    return render(request, 'userBase.html')
-
-# ------------------------------------------------------------------------------
-# for  doner users
 
 
 def users(request):
     name = request.session.get('name', default='Guest')
     return render(request, 'users.html', {'name': name})
 # ------------------------------------------------------------------------------
-# for  ngo
 
-
-def ngoBase(request):
-    return render(request, 'ngoBase.html')
-
-# -----------------------------------------------------------------------------------
 
 def cabout(request):
     name = request.session.get('name', default='Guest')
@@ -476,47 +507,6 @@ def ccontact(request):
     name = request.session.get('name', default='Guest')
     return render(request, 'ccontact.html', {'name': name})
 
-def updateprf(request):
-    name = request.session.get('name', default='Guest')
-    user=myUser.objects.get(username=name)
-    us=userdetail.objects.get(user=user)
-    if request.method == "POST":
-        username = request.POST.get('username', '')
-        email = request.POST.get('email', '')
-        fullname = request.POST.get('fullname', '')
-        phoneno = request.POST.get('phoneno', '')
-        address = request.POST.get('address', '')
-        aadhar = request.POST.get('aadhar', '')
-        city = request.POST.get('city', '')
-        state = request.POST.get('state', '')
-        zip = request.POST.get('zip', '')
-        if(len(username) != 0):
-            user.username=username
-        if(len(email) != 0):
-            user.email=email
-        if(len(fullname) != 0):
-            us.fullname=fullname
-        if(len(phoneno) != 0):
-            us.phoneno=phoneno  
-        if(len(address) != 0):
-            us.address=address
-        if(len(aadhar) != 0):
-            us.aadhar=aadhar
-        if(len(city) != 0):
-            us.city=city
-        if(len(state) != 0):
-            us.state=state
-        if(len(zip) != 0):
-            us.zip=zip                
-        user.save()
-        us.save()
-        if user.usertype == 'ngo':
-            return redirect('ngopage')
-        elif user.usertype=='doner':
-            return redirect('users')
-        else:
-            return redirect('consumer')
-    return render(request, 'updateprf.html', {'name': name, 'user':user,'us':us})        
 
 
 def changepassword(request):
@@ -533,6 +523,7 @@ def changepassword(request):
                 user.save()
                 messages.error(request, 'Password Successfuly changed.....!')
                 return redirect('login')
+                # redirect('changepassword')
             else:
                 messages.error(request, "Password dosen't match....!")
                 redirect('changepassword')
@@ -561,11 +552,12 @@ def previousOrder(request):
     user=userdetail.objects.get(user=id)
     myCart=cart.objects.get(user=user)
     cartID=myCart.id
-    cartItems=cartItem.objects.filter(cart=cartID , status="send")
-    Items=cartItem.objects.filter(cart=cartID , status="confirm")
+    cartItems=cartItem.objects.filter(cart=cartID , status="send")|cartItem.objects.filter(cart=cartID , status="confirm")
+    Items=packCart.objects.filter(cart=cartID , status="confirm") 
+    print(Items)
     context={
-        'item':cartItems,
-        'j':Items,
+        'cartItem':cartItems,
+        'Packitem':Items,
         'name': name
     }
     
@@ -592,3 +584,146 @@ def feedbackinfo(request):
        return redirect('consumer')
     else:
         return render(request, 'feedbackinfo.html',{'name':name})
+
+def addpics(request):
+    name=request.session.get('name',default='Guest')
+    id=myUser.objects.get(username=name)
+    if request.method == "POST":
+        pic=request.FILES.get('pic','')
+        p = gallarypics(pics=pic,user=id)
+        p.save()
+        return redirect('addpics')
+
+    else:
+        return render(request,'addpics.html',{'name':name})
+# --------------------------------------------------------------------------
+# create pakage
+
+
+
+def createPakage(request):
+    name = request.session.get('name', default='Guest')
+    if request.method == "POST":
+        pakagename=request.POST.get('Pakagename','')
+        first=request.POST.get('first','')
+        second=request.POST.get('second','')
+        third=request.POST.get('third','')
+        forth=request.POST.get('forth','')
+        count=int(request.POST.get('count',''))
+        count1=count*2
+        y=0
+        food=fooddata.objects.filter(foodtype=first)|fooddata.objects.filter(foodtype=second)|fooddata.objects.filter(foodtype=third)|fooddata.objects.filter(foodtype=forth)
+        for x in food:
+            if x.quantity>=count1:
+                y=y+1
+        if y==4:
+            foodPack=foodpack(packName=pakagename,food1=first,food2=second,food3=third,food4=forth,quantity=count)
+            foodPack.save()
+            for x in food:
+                x.quantity-=count1
+                x.save()
+            return redirect('ngopage')
+        else:
+            messages.error(request, 'Quantity not available..!')
+            return redirect('createPakage')
+
+       
+    return render(request, 'createPakage.html', {'name': name})
+
+
+# --------------------------------------------------------------------------------
+def updateProfile(request):
+    name = request.session.get('name', default='Guest')
+    mu=User.objects.get(username=name)
+    id=myUser.objects.get(username=name)
+    user=userdetail.objects.get(user=id)
+    if request.method == "POST":
+        username = request.POST.get('username', '')
+        email = request.POST.get('email', '')
+        fullname = request.POST.get('fullname', '')
+        phoneno = request.POST.get('phone', '')
+        address = request.POST.get('address', '')
+        aadhar = request.POST.get('aadhar', '')
+        city = request.POST.get('city', '')
+        state = request.POST.get('state', '')
+        zip = request.POST.get('zip', '')
+        id.username=username
+        id.email=email
+        id.save()
+        mu.username=username
+        mu.email=email
+        mu.save()
+        user.fullname=fullname
+        user.phoneno=phoneno
+        user.aadhar=aadhar
+        user.address=address
+        user.city=city
+        user.state=state
+        user.zip=zip
+        user.save()
+        messages.info(request, 'Your Profile has been updated!')
+        return redirect('users')
+    return render(request, 'updateProfile.html', {'name': name,'user':user})
+# ----------------------------------------------------------------------------------
+def updateProfilec(request):
+    name = request.session.get('name', default='Guest')
+    id=myUser.objects.get(username=name)
+    user=userdetail.objects.get(user=id)
+    mu=User.objects.get(username=name)
+    if request.method == "POST":
+        username = request.POST.get('username', '')
+        email = request.POST.get('email', '')
+        fullname = request.POST.get('fullname', '')
+        phoneno = request.POST.get('phoneno', '')
+        address = request.POST.get('address', '')
+        aadhar = request.POST.get('aadhar', '')
+        city = request.POST.get('city', '')
+        state = request.POST.get('state', '')
+        zip = request.POST.get('zip', '')
+        id.username=username
+        id.email=email
+        id.save()
+        user.fullname=fullname
+        user.phoneno=phoneno
+        user.aadhar=aadhar
+        user.address=address
+        user.city=city
+        user.state=state
+        user.zip=zip
+        user.save()
+        mu.username=username
+        mu.email=email
+        mu.save()
+        messages.info(request, 'Your Profile has been updated!')
+        return redirect('consumer')
+    return render(request, 'updateProfilec.html', {'name': name,'user':user})
+# --------------------------------------------------------------------------------
+# meal 
+def mealFood(request):
+    name = request.session.get('name', default='Guest')
+    id=myUser.objects.get(username=name)
+    user=userdetail.objects.get(user=id)
+    if request.method == "POST": 
+        foodname = request.POST.get('foodName', '')
+        quantity = request.POST.get('quantity', '')
+        dateofc = request.POST.get('dateofc', '')
+        timeofc = request.POST.get('timeofc', '')
+        address = request.POST.get('address', '')
+        dec = request.POST.get('des', '')
+        status='panding'
+        user=user
+        print(foodname,quantity,dateofc,timeofc,address,dec,status,user)
+        # d = mealFood(foodname='hello')
+        # print(d)
+        # d.save()
+        messages.info(request,"Donate food successfuly..!")
+        return redirect('mealFood')
+    return render(request, 'meal.html', {'name': name})
+
+def availableCookedMeal(request):
+    name = request.session.get('name', default='Guest')
+    return render(request, 'availableCookedMeal.html', {'name': name})
+def cookedMealRequest(request):
+    name = request.session.get('name', default='Guest')
+    
+    return render(request, 'cookedMealRequest.html', {'name': name})

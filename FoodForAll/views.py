@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from FoodForAll.models import cartItem, feedback, fooddata, foodpack, gallarypics, myUser,cart, packCart
 from FoodForAll.models import donation,userdetail,gallarypics,cookedmeald
-
+from datetime import date
 
 
 # ------------------------------------------------------------------------------
@@ -543,7 +543,7 @@ def predonation(request):
     id=myUser.objects.get(username=name)
     user=userdetail.objects.get(user=id)
     df=list(donation.objects.filter(user=user,status='confirm'))
-    dc=list(cookedmeald.objects.filter(user=user,status='confirm'))
+    dc=list(cookedmeald.objects.filter(user=user,status='confirm',datedonation=date.today()))
     return render(request,'predonation.html',{'name': name,'list':df,'listc':dc})
 # -------------------------------------------------------------
 def previousOrder(request):
@@ -720,7 +720,8 @@ def meal(request):
 
 def availableCookedMeal(request):
     name = request.session.get('name', default='Guest')
-    return render(request, 'availableCookedMeal.html', {'name': name})
+    d = list(cookedmeald.objects.filter(status='confirm',datedonation=date.today()))
+    return render(request, 'availableCookedMeal.html', {'name': name,'list':d})
 def cookedMealRequest(request):
     name = request.session.get('name', default='Guest')
     d = list(cookedmeald.objects.filter(status='panding'))

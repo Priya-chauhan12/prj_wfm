@@ -64,7 +64,7 @@
                         <div class="card-body">
                             <h3>Donate Cooked Food..!</h3>
                             <!-- for name -->
-                            <form action="mealFood" method="post">
+                            <form action="meal" method="post">
                                 {% csrf_token %}
                                 <!-- food type -->
                                 <div class="form-group mt-3">
@@ -74,7 +74,7 @@
                                 </div>
                                 <!-- for quantity -->
                                 <div class="form-group mt-3">
-                                    <label for="inputquantity">Food Quantity</label>
+                                    <label for="inputquantity">how many person can eat?</label>
                                     <input name="quantity" type="text" class="form-control quantity-field" placeholder="Enter food quantity">
                                     <small class="quantity-field-msg form-text text-danger ml-3"></small>
                                 </div>
@@ -94,13 +94,6 @@
                                 <div class=" form-group mt-3">
                                     <label for="address">Address</label>
                                     <textarea name="address" type="textarea" class="des-field form-control" rows="4" cols="50" placeholder="Enter your Address"></textarea>
-
-                                    <small class="des-field-msg form-text text-danger ml-3"></small>
-                                </div>
-                                <!-- description -->
-                                <div class=" form-group mt-3">
-                                    <label for="description">Description</label>
-                                    <textarea name="des" type="textarea" class="des-field form-control" rows="4" cols="50" placeholder="Enter description for food hear"></textarea>
 
                                     <small class="des-field-msg form-text text-danger ml-3"></small>
                                 </div>

@@ -55,6 +55,17 @@ class donation(models.Model):
     user=models.ForeignKey(userdetail,on_delete=models.CASCADE)
     def __str__(Self):
         return Self.foodtype
+class cookedmeald(models.Model):
+    name=models.CharField(max_length=50,default='')        
+    datedonation=models.DateTimeField(default=datetime.now)
+    quantity=models.IntegerField(default=0)
+    dateofc=models.DateField(default='')
+    timeofc=models.TimeField(default='')
+    address=models.CharField(max_length=500,default='')
+    status=models.CharField(max_length=10,default='Pending')  
+    user=models.ForeignKey(userdetail,on_delete=models.CASCADE)
+    def __str__(Self):
+        return Self.name
 
 class fooddata(models.Model):
     foodtype=models.CharField(max_length=50,default='')

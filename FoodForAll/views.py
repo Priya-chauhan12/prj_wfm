@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from FoodForAll.models import cartItem, feedback, fooddata, foodpack, gallarypics, myUser,cart, packCart
-from FoodForAll.models import donation,userdetail,gallarypics
+from FoodForAll.models import donation,userdetail,gallarypics,cookedmeald
 
 
 
@@ -206,8 +206,8 @@ def requeststatus(request):
     id=myUser.objects.get(username=name)
     user=userdetail.objects.get(user=id)
     df=list(donation.objects.filter(user=user))
-    
-    return render(request, 'requeststatus.html', {'name': name,'list':df})
+    dc=list(cookedmeald.objects.filter(user=user))
+    return render(request, 'requeststatus.html', {'name': name,'list':df,'listc':dc})
 #----------------------------------------------------------------------------------
 # confirm donation request
 def confirm(request):
@@ -543,7 +543,8 @@ def predonation(request):
     id=myUser.objects.get(username=name)
     user=userdetail.objects.get(user=id)
     df=list(donation.objects.filter(user=user,status='confirm'))
-    return render(request,'predonation.html',{'name': name,'list':df})
+    dc=list(cookedmeald.objects.filter(user=user,status='confirm'))
+    return render(request,'predonation.html',{'name': name,'list':df,'listc':dc})
 # -------------------------------------------------------------
 def previousOrder(request):
     name = request.session.get('name', default='Guest')
@@ -699,7 +700,7 @@ def updateProfilec(request):
     return render(request, 'updateProfilec.html', {'name': name,'user':user})
 # --------------------------------------------------------------------------------
 # meal 
-def mealFood(request):
+def meal(request):
     name = request.session.get('name', default='Guest')
     id=myUser.objects.get(username=name)
     user=userdetail.objects.get(user=id)
@@ -709,15 +710,12 @@ def mealFood(request):
         dateofc = request.POST.get('dateofc', '')
         timeofc = request.POST.get('timeofc', '')
         address = request.POST.get('address', '')
-        dec = request.POST.get('des', '')
         status='panding'
         user=user
-        print(foodname,quantity,dateofc,timeofc,address,dec,status,user)
-        # d = mealFood(foodname='hello')
-        # print(d)
-        # d.save()
+        cd = cookedmeald(name=foodname,quantity=quantity,dateofc=dateofc,timeofc=timeofc,address=address,user=user,status=status)
+        cd.save()
         messages.info(request,"Donate food successfuly..!")
-        return redirect('mealFood')
+        return redirect('meal')
     return render(request, 'meal.html', {'name': name})
 
 def availableCookedMeal(request):
@@ -725,5 +723,26 @@ def availableCookedMeal(request):
     return render(request, 'availableCookedMeal.html', {'name': name})
 def cookedMealRequest(request):
     name = request.session.get('name', default='Guest')
-    
-    return render(request, 'cookedMealRequest.html', {'name': name})
+    d = list(cookedmeald.objects.filter(status='panding'))
+    return render(request, 'cookedMealRequest.html', {'name': name,'list':d})
+
+
+def confirmc(request):
+    name = request.session.get('name', default='Guest')
+    if request.method == "POST":
+        fid=request.POST.get('fid', '')
+        fd=cookedmeald.objects.get(id=fid)
+        fd.status="confirm"
+        fd.save()
+        return redirect('cookedMealRequest')
+    return render(request, 'confirmc.html', {'name': name})
+
+def cancelc(request):
+    name = request.session.get('name', default='Guest')
+    if request.method == "POST":
+        fid=request.POST.get('fid', '')
+        fd=cookedmeald.objects.get(id=fid)
+        fd.status="cancel"
+        fd.save()
+        return redirect('cookedMealRequest')
+    return render(request, 'cancelc.html', {'name': name})

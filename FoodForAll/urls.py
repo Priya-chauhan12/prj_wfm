@@ -21,7 +21,7 @@ urlpatterns = [
      path('donate',views.donate,name='donate'),
     path('requeststatus',views.requeststatus,name='requeststatus'),
     path('predonation',views.predonation,name='predonation'),
-    path('mealFood',views.mealFood,name='mealFood'),
+    path('meal',views.meal,name='meal'),
     
     path('cookedMealRequest',views.cookedMealRequest,name='cookedMealRequest'),
     path('availableCookedMeal',views.availableCookedMeal,name='availableCookedMeal'),
@@ -52,6 +52,8 @@ urlpatterns = [
     path('confirm',views.confirm,name='confirm'),
     path('cancel',views.cancel,name='cancel'),
     path('addpics',views.addpics,name='addpics'),
+    path('confirmc',views.confirmc,name='confirmc'),
+    path('cancelc',views.cancelc,name='cancelc'),
 
     path('consumer',views.consumer,name='consumer'),
     path('selectfood',views.selectfood,name='selectfood') ,

@@ -92,28 +92,28 @@
                     </thead>
                     <tbody>
                         {% for d in list %}
-                        <form action="confirm" method="post">
+                        <form action="confirmc" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="fid" value="{{d.id}}">
 
                             <tr class="text-dark">
                                 <td></td>
                                 <td>{{d.user.fullname}}</td>
-                                <td>{{d.foodtname}}</td>
+                                <td>{{d.name}}</td>
                                 <td>{{d.quantity}}</td>
                                 <td>{{d.status}}</td>
                                 <td>{{d.donate_date}}</td>
                                 <td>{{d.timeofc}}</td>
                                 <td>{{d.dateofc}}</td>
                                 <td> <input type="submit" value="Confirm" class="btn btn-primary">
-                                    <a href="confirm"></a>
+                                    <a href="confirmc"></a>
                                 </td>
                         </form>
-                        <form action="cancel" method="post">
+                        <form action="cancelc" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="fid" value="{{d.id}}">
                             <td><input type="submit" value="Cancel" class="btn btn-primary">
-                                <a href="cancel"></a>
+                                <a href="cancelc"></a>
                         </form>
                         </td>
                         </tr>

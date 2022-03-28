@@ -104,6 +104,16 @@
                                     <td>{{d.timeofc}}</td>
                                     <td>{{d.dateofc}}</td>
                                 </tr>
+                                {% endfor %} {% for p in listc %}
+                                <tr class="text-dark">
+                                    <td></td>
+                                    <td>{{p.name}}</td>
+                                    <td>{{p.quantity}}person</td>
+                                    <td>{{p.status}}</td>
+                                    <td>{{p.datedonation}}</td>
+                                    <td>{{p.timeofc}}</td>
+                                    <td>{{p.dateofc}}</td>
+                                </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
